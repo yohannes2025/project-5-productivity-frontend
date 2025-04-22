@@ -1,5 +1,5 @@
 {
-  "name": "moments",
+  "name": "productivity-app",
   "version": "0.1.0",
   "private": true,
   "dependencies": {
@@ -44,7 +44,8 @@
     ]
   },
   "devDependencies": {
-    "msw": "^0.35.0"
+    "msw": "^0.35.0",
+    "vite-plugin-node-polyfills": "^0.23.0"
   },
   "engines": {
     "node": "16.19.1",
