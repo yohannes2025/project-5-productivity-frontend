@@ -1,6 +1,8 @@
 import React, { useState, useEffect } from "react";
 import axios from "axios";
 import { Container, Row, Col, Form, Button, Alert } from "react-bootstrap";
+import styles from "../styles/Common.module.css";
+import clsx from "clsx"; // Import clsx
 
 const Settings = () => {
   const [settings, setSettings] = useState({
@@ -63,9 +65,17 @@ const Settings = () => {
   };
 
   return (
-    <Container className="d-flex justify-content-center align-items-center vh-100">
+    <Container
+      className={clsx(
+        styles.container,
+        "d-flex",
+        "flex-column",
+        "justify-content-center",
+        "align-items-center"
+      )}
+    >
       <Row className="w-100">
-        <Col md={6} className="mx-auto">
+        <Col md={6} className="mx-auto ">
           <h1 className="text-center mb-4">Settings</h1>
           {message && (
             <Alert variant="info" onClose={() => setMessage("")} dismissible>
@@ -85,17 +95,6 @@ const Settings = () => {
               >
                 <option value="light">Light</option>
                 <option value="dark">Dark</option>
-              </Form.Control>
-            </Form.Group>
-            <Form.Group controlId="calendarStartDaySelect">
-              <Form.Label>Calendar Start Day:</Form.Label>
-              <Form.Control
-                as="select"
-                value={settings.calendarStartDay}
-                onChange={handleCalendarStartDayChange}
-              >
-                <option value="Sunday">Sunday</option>
-                <option value="Monday">Monday</option>
               </Form.Control>
             </Form.Group>
             <h3>Notifications</h3>

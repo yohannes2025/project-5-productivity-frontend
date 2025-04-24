@@ -1,9 +1,10 @@
+// services/api.js
 import axios from "axios";
 import React, { useState } from "react";
 
 // Set the base URL for the API
 const API_BASE_URL =
-  "https://pp5-productivity-app-frontend-ea1d8fc6e9da.herokuapp.com/api";
+  "https://project-5-productivity-backend-1b67e4c3722a.herokuapp.com/api";
 
 // Create an Axios instance with default configurations
 const api = axios.create({

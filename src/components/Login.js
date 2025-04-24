@@ -3,6 +3,8 @@ import React, { useState } from "react";
 import { useNavigate } from "react-router-dom";
 import api from "../services/api";
 import { Container, Row, Col, Form, Button, Card } from "react-bootstrap";
+import styles from "../styles/Common.module.css";
+import clsx from "clsx"; // Import clsx
 
 const Login = () => {
   const navigate = useNavigate();
@@ -31,11 +33,19 @@ const Login = () => {
   };
 
   return (
-    <Container className="d-flex justify-content-center align-items-center vh-100">
+    <Container
+      className={clsx(
+        styles.container,
+        "d-flex",
+        "flex-column",
+        "justify-content-center",
+        "align-items-center"
+      )}
+    >
       {" "}
       {/* Flexbox for vertical alignment */}
       <Row className="w-100">
-        <Col xs={12} sm={10} md={6} lg={4} className="mx-auto">
+        <Col xs={12} sm={10} md={8} lg={5} className="mx-auto shadow-lg">
           {" "}
           {/* Center horizontally on small devices and up */}
           <Card>

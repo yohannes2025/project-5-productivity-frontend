@@ -10,6 +10,8 @@ import {
   Alert,
   Card,
 } from "react-bootstrap";
+import styles from "../styles/Common.module.css";
+import clsx from "clsx"; // Import clsx
 
 const Register = () => {
   const navigate = useNavigate();
@@ -34,9 +36,17 @@ const Register = () => {
   };
 
   return (
-    <Container className="d-flex justify-content-center align-items-center vh-100">
+    <Container
+      className={clsx(
+        styles.container,
+        "d-flex",
+        "flex-column",
+        "justify-content-center",
+        "align-items-center"
+      )}
+    >
       <Row className="w-100">
-        <Col xs={12} sm={10} md={8} lg={6} className="mx-auto">
+        <Col xs={12} sm={10} md={8} lg={5} className="mx-auto shadow-lg">
           <Card>
             <Card.Body>
               <Card.Title className="text-center">Register</Card.Title>

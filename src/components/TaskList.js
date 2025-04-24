@@ -9,6 +9,8 @@ import {
   Card,
   Table,
 } from "react-bootstrap";
+import styles from "../styles/Common.module.css";
+import clsx from "clsx"; // Import clsx
 
 const TaskList = () => {
   const [tasks] = useState([]);
@@ -35,17 +37,16 @@ const TaskList = () => {
 
   return (
     <Container
-      fluid
-      className="d-flex flex-column justify-content-center align-items-center"
-      style={{
-        minHeight: "100vh",
-        paddingTop: "2rem",
-        backgroundColor: "#f8f9fa",
-      }}
+      className={clsx(
+        styles.container,
+        "d-flex",
+        "flex-column",
+        "justify-content-center",
+        "align-items-center"
+      )}
     >
       <Card className="p-4 shadow w-100" style={{ maxWidth: "960px" }}>
         <h3 className="text-center mb-4">Your Task List</h3>
-
         {/* Search + Filters */}
         <Form className="mb-4">
           <Row className="align-items-end g-3 justify-content-center">
