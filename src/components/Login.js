@@ -45,12 +45,11 @@ const Login = () => {
       {" "}
       {/* Flexbox for vertical alignment */}
       <Row className="w-100">
-        <Col xs={12} sm={10} md={8} lg={5} className="mx-auto shadow-lg">
-          {" "}
+        <Col xs={12} sm={10} md={8} lg={5} className="mx-auto ">
           {/* Center horizontally on small devices and up */}
-          <Card>
+          <Card className="shadow">
             <Card.Body>
-              <Card.Title className="text-center">Login</Card.Title>
+              <Card.Title className="text-center ">Login</Card.Title>
               <Form onSubmit={handleSubmit}>
                 <Form.Group controlId="formBasicEmail">
                   <Form.Label>Email</Form.Label>

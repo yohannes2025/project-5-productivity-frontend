@@ -2,7 +2,6 @@
 import React, { useState, useEffect } from "react";
 import { NavLink, useLocation } from "react-router-dom";
 import { Navbar, Container, Nav, NavDropdown } from "react-bootstrap";
-import logo from "../assets/logo.ico";
 import styles from "../styles/NavBar.module.css";
 import "bootstrap/dist/css/bootstrap.min.css";
 
@@ -32,17 +31,17 @@ function NavBar() {
         >
           <Container>
             <Navbar.Brand className="me-auto">
-              <img src={logo} alt="logo" height="45" className="me-2" />
-              Productivity
+              <img src="/logo192.png" alt="logo" height="45" className="me-2" />
+              <span className="fw-bold">Productivity</span>
             </Navbar.Brand>
 
             <Navbar.Toggle aria-controls="navbarScroll" />
-            <Navbar.Collapse id="navbarScroll">
-              <Nav className="ms-auto my-2 my-lg-0" navbarScroll>
+            <Navbar.Collapse id="navbarScroll ">
+              <Nav className="ms-auto my-2 my-lg-0 " navbarScroll>
                 <NavLink
                   exact="true"
                   to="/"
-                  className={styles.NavLink}
+                  className={`${styles.NavLink} fw-bold`}
                   onClick={handleNavClick}
                 >
                   <i className="fa-solid fa-house"></i> Home Page
@@ -50,7 +49,7 @@ function NavBar() {
                 <NavLink
                   exact="true"
                   to="/profile"
-                  className={styles.NavLink}
+                  className={`${styles.NavLink} fw-bold`}
                   onClick={handleNavClick}
                 >
                   <i className="fa-solid fa-user"></i> Profile
@@ -58,7 +57,7 @@ function NavBar() {
                 <NavLink
                   exact="true"
                   to="/settings"
-                  className={styles.NavLink}
+                  className={`${styles.NavLink} fw-bold`}
                   onClick={handleNavClick}
                 >
                   <i className="fa-solid fa-gear"></i> Settings
@@ -66,7 +65,7 @@ function NavBar() {
 
                 <NavDropdown
                   title={
-                    <span className={styles.NavLink}>
+                    <span className={`${styles.NavLink} fw-bold`}>
                       <i className="fa-solid fa-check"></i> Tasks
                     </span>
                   }
@@ -76,7 +75,7 @@ function NavBar() {
                   <NavDropdown.Item as="div">
                     <NavLink
                       to="/CreateTask"
-                      className={styles.NavLink}
+                      className={`${styles.NavLink} fw-bold`}
                       onClick={handleNavClick}
                     >
                       <i className="fa-solid fa-square-plus"></i> Create Task
@@ -85,7 +84,7 @@ function NavBar() {
                   <NavDropdown.Item as="div">
                     <NavLink
                       to="/EditTask"
-                      className={styles.NavLink}
+                      className={`${styles.NavLink} fw-bold`}
                       onClick={handleNavClick}
                     >
                       <i className="fa-solid fa-file-pen"></i> Edit Task
@@ -94,7 +93,7 @@ function NavBar() {
                   <NavDropdown.Item as="div">
                     <NavLink
                       to="/tasklist"
-                      className={styles.NavLink}
+                      className={`${styles.NavLink} fw-bold`}
                       onClick={handleNavClick}
                     >
                       <i className="fa-solid fa-list-check"></i> Task List

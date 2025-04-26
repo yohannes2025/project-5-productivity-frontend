@@ -3,13 +3,13 @@ import React, { useState, useEffect } from "react";
 import axios from "axios";
 import { Container, Row, Col, Form, Button, Table } from "react-bootstrap";
 import styles from "../styles/Common.module.css";
-import clsx from "clsx"; // Import clsx
+import clsx from "clsx";
 
 const Profile = () => {
   const [user, setUser] = useState({
     name: "",
     email: "",
-    avatar: "",
+    attachment: "",
   });
   const [userData, setUserData] = useState([]);
 
@@ -18,6 +18,7 @@ const Profile = () => {
       try {
         const response = await axios.get("/api/profile");
         setUser(response.data);
+
         // Fetching additional user data to show in a table
         const userResponse = await axios.get("/api/user_data");
         setUserData(userResponse.data);
@@ -30,17 +31,27 @@ const Profile = () => {
 
   const handleProfileUpdate = async (e) => {
     e.preventDefault();
+    const formData = new FormData();
+    formData.append("name", user.name);
+    formData.append("email", user.email);
+    formData.append("attachment", user.attachment);
+
     try {
-      await axios.put("/api/profile", user);
+      await axios.put("/api/profile", formData, {
+        headers: {
+          "Content-Type": "multipart/form-data", // Required for file uploads
+        },
+      });
       console.log("Profile updated successfully");
     } catch (error) {
       console.error("Error updating profile:", error);
     }
   };
 
-  const handleAvatarChange = (e) => {
+  const handleAttachmentChange = (e) => {
+    // Updated the function name for clarity
     const file = e.target.files[0];
-    setUser((prevUser) => ({ ...prevUser, avatar: file }));
+    setUser((prevUser) => ({ ...prevUser, attachment: file }));
   };
 
   return (
@@ -83,11 +94,13 @@ const Profile = () => {
                 className="mb-3"
               />
             </Form.Group>
-            <Form.Group controlId="formBasicAvatar">
-              <Form.Label>Avatar:</Form.Label>
+            <Form.Group controlId="formBasicAttachment">
+              {" "}
+              {/* Updated control ID */}
+              <Form.Label>Attachment:</Form.Label>
               <Form.Control
                 type="file"
-                onChange={handleAvatarChange}
+                onChange={handleAttachmentChange}
                 className="mb-3"
               />
             </Form.Group>
