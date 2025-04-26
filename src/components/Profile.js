@@ -1,57 +1,69 @@
 // Profile.js
-import React, { useState, useEffect } from "react";
-import axios from "axios";
-import { Container, Row, Col, Form, Button, Table } from "react-bootstrap";
-import styles from "../styles/Common.module.css";
-import clsx from "clsx";
 
+import React, { useState, useEffect } from "react"; // Importing React and hooks
+import axios from "axios"; // Import axios for API calls
+import { Container, Row, Col, Form, Button, Table } from "react-bootstrap"; // Import necessary components from React Bootstrap
+import styles from "../styles/Common.module.css"; // Import custom styles
+import clsx from "clsx"; // Import clsx for conditional class names
+
+// Profile functional component
 const Profile = () => {
+  // State to hold user information
   const [user, setUser] = useState({
-    name: "",
-    email: "",
-    attachment: "",
+    name: "", // User's name
+    email: "", // User's email
+    attachment: "", // File attachment (avatar)
   });
+
+  // State to hold additional user data
   const [userData, setUserData] = useState([]);
 
+  // Effect to fetch user profile data on component mount
   useEffect(() => {
     const fetchUserProfile = async () => {
       try {
+        // Fetching user profile
         const response = await axios.get("/api/profile");
-        setUser(response.data);
+        setUser(response.data); // Setting user data
 
-        // Fetching additional user data to show in a table
+        // Fetching additional user data to display in a table
         const userResponse = await axios.get("/api/user_data");
-        setUserData(userResponse.data);
+        setUserData(userResponse.data); // Setting additional user data
       } catch (error) {
+        // Log error if fetching fails
         console.error("Error fetching user profile:", error);
       }
     };
-    fetchUserProfile();
-  }, []);
+    fetchUserProfile(); // Call the fetch function
+  }, []); // Empty dependency array to run once on mount
 
+  // Function to handle profile update submission
   const handleProfileUpdate = async (e) => {
-    e.preventDefault();
-    const formData = new FormData();
+    e.preventDefault(); // Prevent the default form submission
+    const formData = new FormData(); // Create a new FormData object
+    // Append user data to FormData
     formData.append("name", user.name);
     formData.append("email", user.email);
     formData.append("attachment", user.attachment);
 
     try {
+      // Sending PUT request to update profile
       await axios.put("/api/profile", formData, {
         headers: {
           "Content-Type": "multipart/form-data", // Required for file uploads
         },
       });
-      console.log("Profile updated successfully");
+      console.log("Profile updated successfully"); // Log success
     } catch (error) {
+      // Log error if updating fails
       console.error("Error updating profile:", error);
     }
   };
 
+  // Function to handle changes in the file input
   const handleAttachmentChange = (e) => {
-    // Updated the function name for clarity
-    const file = e.target.files[0];
-    setUser((prevUser) => ({ ...prevUser, attachment: file }));
+    const file = e.target.files[0]; // Get the selected file
+    setUser((prevUser) => ({ ...prevUser, attachment: file })); // Update user state with the file
   };
 
   return (
@@ -69,6 +81,7 @@ const Profile = () => {
         <Col className="shadow-lg">
           <h1 className="text-center mb-4">Profile</h1>
           <Form onSubmit={handleProfileUpdate}>
+            {/* Form group for name */}
             <Form.Group controlId="formBasicName">
               <Form.Label>Name:</Form.Label>
               <Form.Control
@@ -80,6 +93,8 @@ const Profile = () => {
                 className="mb-3"
               />
             </Form.Group>
+
+            {/* Form group for email */}
             <Form.Group controlId="formBasicEmail">
               <Form.Label>Email:</Form.Label>
               <Form.Control
@@ -94,9 +109,9 @@ const Profile = () => {
                 className="mb-3"
               />
             </Form.Group>
+
+            {/* Form group for file attachment */}
             <Form.Group controlId="formBasicAttachment">
-              {" "}
-              {/* Updated control ID */}
               <Form.Label>Attachment:</Form.Label>
               <Form.Control
                 type="file"
@@ -104,12 +119,13 @@ const Profile = () => {
                 className="mb-3"
               />
             </Form.Group>
+
             <Button variant="primary" type="submit" className="w-100">
               Update Profile
             </Button>
           </Form>
 
-          {/* Table component */}
+          {/* Table to display user data */}
           <h2 className="mt-4">User Data</h2>
           <Table striped bordered hover className="mt-3">
             <thead>
@@ -145,4 +161,4 @@ const Profile = () => {
   );
 };
 
-export default Profile;
+export default Profile; // Exporting the Profile component
