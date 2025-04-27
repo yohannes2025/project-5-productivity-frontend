@@ -73,7 +73,7 @@ const Login = () => {
                     required
                   />
                 </Form.Group>
-                <Button variant="primary" type="submit" className="w-100">
+                <Button variant="primary" type="submit" className="w-100 mt-3">
                   Login
                 </Button>
               </Form>
