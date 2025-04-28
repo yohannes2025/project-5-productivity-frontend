@@ -128,9 +128,7 @@ const Login = () => {
       navigate("/"); // Redirect to home or dashboard after successful login
     } catch (err) {
       console.error("Login error:", err); // Log error
-      setError(
-        err.response?.data?.message || "An error occurred during login."
-      );
+      setError(err.response?.data?.message || "Invalid email or password.");
     }
   };
 

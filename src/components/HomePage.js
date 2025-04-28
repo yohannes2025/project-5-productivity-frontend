@@ -18,15 +18,15 @@ const HomePage = () => {
     >
       <Row className="justify-content-center mb-5">
         <Col md={10} lg={8}>
-          <h1 className="display-4 fw-bold text-primary">
+          <h1 className="display-4 fw-bold text-primary styles.responsiveTitle">
             Stay Productive, Stay Ahead
           </h1>
-          <p className="lead mt-3 fs-4">
+          <p className="lead mt-3 fs-4 styles.responsiveSubtitle">
             Organize your life and collaborate better with our calendar-driven
             productivity app. Plan your tasks, track habits, and achieve more
             together.
           </p>
-          <div className="d-flex justify-content-center gap-3 mt-3 ">
+          <div className="d-flex justify-content-center gap-3 mt-3">
             <Link to="/register">
               <Button variant="outline-primary" size="lg">
                 Get Started
