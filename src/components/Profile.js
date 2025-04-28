@@ -1,18 +1,18 @@
 // Profile.js
 
-import React, { useState, useEffect } from "react"; // Importing React and hooks
-import axios from "axios"; // Import axios for API calls
-import { Container, Row, Col, Form, Button, Table } from "react-bootstrap"; // Import necessary components from React Bootstrap
-import styles from "../styles/Common.module.css"; // Import custom styles
-import clsx from "clsx"; // Import clsx for conditional class names
+import React, { useState, useEffect } from "react";
+import axios from "axios";
+import { Container, Row, Col, Form, Button, Table } from "react-bootstrap";
+import styles from "../styles/Common.module.css";
+import clsx from "clsx";
 
 // Profile functional component
 const Profile = () => {
   // State to hold user information
   const [user, setUser] = useState({
-    name: "", // User's name
-    email: "", // User's email
-    attachment: "", // File attachment (avatar)
+    name: "",
+    email: "",
+    attachment: "",
   });
 
   // State to hold additional user data
@@ -24,23 +24,22 @@ const Profile = () => {
       try {
         // Fetching user profile
         const response = await axios.get("/api/profile");
-        setUser(response.data); // Setting user data
+        setUser(response.data);
 
         // Fetching additional user data to display in a table
         const userResponse = await axios.get("/api/user_data");
-        setUserData(userResponse.data); // Setting additional user data
+        setUserData(userResponse.data);
       } catch (error) {
         // Log error if fetching fails
         console.error("Error fetching user profile:", error);
       }
     };
-    fetchUserProfile(); // Call the fetch function
+    fetchUserProfile();
   }, []); // Empty dependency array to run once on mount
 
-  // Function to handle profile update submission
   const handleProfileUpdate = async (e) => {
-    e.preventDefault(); // Prevent the default form submission
-    const formData = new FormData(); // Create a new FormData object
+    e.preventDefault();
+    const formData = new FormData();
     // Append user data to FormData
     formData.append("name", user.name);
     formData.append("email", user.email);
@@ -53,7 +52,7 @@ const Profile = () => {
           "Content-Type": "multipart/form-data", // Required for file uploads
         },
       });
-      console.log("Profile updated successfully"); // Log success
+      console.log("Profile updated successfully");
     } catch (error) {
       // Log error if updating fails
       console.error("Error updating profile:", error);
@@ -62,8 +61,8 @@ const Profile = () => {
 
   // Function to handle changes in the file input
   const handleAttachmentChange = (e) => {
-    const file = e.target.files[0]; // Get the selected file
-    setUser((prevUser) => ({ ...prevUser, attachment: file })); // Update user state with the file
+    const file = e.target.files[0];
+    setUser((prevUser) => ({ ...prevUser, attachment: file }));
   };
 
   return (
@@ -161,4 +160,4 @@ const Profile = () => {
   );
 };
 
-export default Profile; // Exporting the Profile component
+export default Profile;
