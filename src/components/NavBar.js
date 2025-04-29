@@ -1,18 +1,16 @@
-//NavBar.js
+// NavBar.js
 import React, { useState, useEffect } from "react";
 import { NavLink, useLocation } from "react-router-dom";
-import { Navbar, Container, Nav, NavDropdown } from "react-bootstrap";
+import { Navbar, Container, Nav } from "react-bootstrap";
 import styles from "../styles/NavBar.module.css";
 import "bootstrap/dist/css/bootstrap.min.css";
 
-function NavBar() {
+function NavBar({ isLoggedIn, onLogout }) {
   const [expanded, setExpanded] = useState(false); // manages collapse state
-  const [selected, setSelected] = useState(false);
   const location = useLocation();
 
   useEffect(() => {
-    setSelected(true);
-    setExpanded(false); // close the navbar on route change
+    setExpanded(false); // close navbar on route change
   }, [location.pathname]);
 
   const handleNavClick = () => {
@@ -36,10 +34,9 @@ function NavBar() {
             </Navbar.Brand>
 
             <Navbar.Toggle aria-controls="navbarScroll" />
-            <Navbar.Collapse id="navbarScroll ">
-              <Nav className="ms-auto my-2 my-lg-0 " navbarScroll>
+            <Navbar.Collapse id="navbarScroll">
+              <Nav className="ms-auto my-2 my-lg-0" navbarScroll>
                 <NavLink
-                  exact="true"
                   to="/"
                   className={`${styles.NavLink} fw-bold`}
                   onClick={handleNavClick}
@@ -47,7 +44,6 @@ function NavBar() {
                   <i className="fa-solid fa-house"></i> Home Page
                 </NavLink>
                 <NavLink
-                  exact="true"
                   to="/profile"
                   className={`${styles.NavLink} fw-bold`}
                   onClick={handleNavClick}
@@ -75,14 +71,18 @@ function NavBar() {
                 >
                   <i className="fa-solid fa-list-check"></i> Task List
                 </NavLink>
+                {isLoggedIn && (
+                  <Nav.Link
+                    onClick={onLogout}
+                    className={`${styles.NavLink} fw-bold`}
+                  >
+                    <i className="fa-solid fa-sign-out-alt"></i> Logout
+                  </Nav.Link>
+                )}
               </Nav>
             </Navbar.Collapse>
           </Container>
         </Navbar>
-
-        <div className={selected ? styles.mainBody : ""}>
-          {/* The rest of the main content */}
-        </div>
       </div>
     </>
   );

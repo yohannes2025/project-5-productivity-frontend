@@ -10,7 +10,7 @@ import {
   Table,
 } from "react-bootstrap";
 import styles from "../styles/Common.module.css";
-import clsx from "clsx"; // Import clsx for conditional class names
+import clsx from "clsx";
 
 const TaskList = () => {
   // State to manage the list of tasks, selected task, search text, filter options, and sort option

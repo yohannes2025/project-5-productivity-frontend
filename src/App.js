@@ -1,4 +1,4 @@
-// export default App;
+// App.js
 import React, { useState } from "react";
 import NavBar from "./components/NavBar";
 import styles from "./App.module.css";
@@ -18,13 +18,15 @@ function App() {
   const [isLoggedIn, setIsLoggedIn] = useState(false);
 
   const handleLogin = () => {
-    // Perform login logic here
+    // Perform login logic here, like storing a token
     setIsLoggedIn(true);
   };
 
   const handleLogout = () => {
-    // Perform logout logic here
+    // Perform logout logic here, like removing a token
     setIsLoggedIn(false);
+    // Redirect to home page (optional if using <Navigate>)
+    // navigate("/");
   };
 
   return (
