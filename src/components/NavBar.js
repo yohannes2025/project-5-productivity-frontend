@@ -55,51 +55,26 @@ function NavBar() {
                   <i className="fa-solid fa-user"></i> Profile
                 </NavLink>
                 <NavLink
-                  exact="true"
-                  to="/settings"
+                  to="/CreateTask"
                   className={`${styles.NavLink} fw-bold`}
                   onClick={handleNavClick}
                 >
-                  <i className="fa-solid fa-gear"></i> Settings
+                  <i className="fa-solid fa-square-plus"></i> Create Task
                 </NavLink>
-
-                <NavDropdown
-                  title={
-                    <span className={`${styles.NavLink} fw-bold`}>
-                      <i className="fa-solid fa-check"></i> Tasks
-                    </span>
-                  }
-                  id="navbarScrollingDropdown"
-                  className={styles.NavDropdown}
+                <NavLink
+                  to="/EditTask"
+                  className={`${styles.NavLink} fw-bold`}
+                  onClick={handleNavClick}
                 >
-                  <NavDropdown.Item as="div">
-                    <NavLink
-                      to="/CreateTask"
-                      className={`${styles.NavLink} fw-bold`}
-                      onClick={handleNavClick}
-                    >
-                      <i className="fa-solid fa-square-plus"></i> Create Task
-                    </NavLink>
-                  </NavDropdown.Item>
-                  <NavDropdown.Item as="div">
-                    <NavLink
-                      to="/EditTask"
-                      className={`${styles.NavLink} fw-bold`}
-                      onClick={handleNavClick}
-                    >
-                      <i className="fa-solid fa-file-pen"></i> Edit Task
-                    </NavLink>
-                  </NavDropdown.Item>
-                  <NavDropdown.Item as="div">
-                    <NavLink
-                      to="/tasklist"
-                      className={`${styles.NavLink} fw-bold`}
-                      onClick={handleNavClick}
-                    >
-                      <i className="fa-solid fa-list-check"></i> Task List
-                    </NavLink>
-                  </NavDropdown.Item>
-                </NavDropdown>
+                  <i className="fa-solid fa-file-pen"></i> Edit Task
+                </NavLink>
+                <NavLink
+                  to="/tasklist"
+                  className={`${styles.NavLink} fw-bold`}
+                  onClick={handleNavClick}
+                >
+                  <i className="fa-solid fa-list-check"></i> Task List
+                </NavLink>
               </Nav>
             </Navbar.Collapse>
           </Container>
