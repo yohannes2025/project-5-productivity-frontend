@@ -15,6 +15,7 @@ const EditTask = ({ task, users = [], onSubmit, onCancel }) => {
   );
   const [priority, setPriority] = useState(task?.priority || "low"); // Initialize priority
   const [category, setCategory] = useState(task?.category || ""); // Initialize category
+  const [status, setStatus] = useState("Pending"); // Task status with initial value
   const [assignedUsers, setAssignedUsers] = useState(task?.assignedUsers || []); // Initialize assigned users
   const [files, setFiles] = useState([]); // Initialize files
 
@@ -29,6 +30,7 @@ const EditTask = ({ task, users = [], onSubmit, onCancel }) => {
       dueDate,
       priority,
       category,
+      status,
       assignedUsers,
       files,
     });
@@ -113,6 +115,21 @@ const EditTask = ({ task, users = [], onSubmit, onCancel }) => {
               value={category}
               onChange={(e) => setCategory(e.target.value)} // Update category state
             />
+          </Form.Group>
+          {/* Task Status Selection */}
+          <Form.Group controlId="taskStatus" className="mt-3">
+            <Form.Label>Status</Form.Label>
+
+            <Form.Select
+              value={status}
+              onChange={(e) => setStatus(e.target.value)} // Update status state on selection
+            >
+              <option value="Pending">Pending</option>
+
+              <option value="In Progress">In Progress</option>
+
+              <option value="Done">Done</option>
+            </Form.Select>
           </Form.Group>
           {/* Assigned Users Selection */}
           <Form.Group controlId="assignedUsers" className="mt-3">

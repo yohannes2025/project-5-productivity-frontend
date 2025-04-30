@@ -29,6 +29,18 @@ function App() {
     // navigate("/");
   };
 
+  // Define the onSubmit function
+  const handleTaskSubmit = (taskData) => {
+    console.log("Task Submitted:", taskData);
+    // Handle the task creation logic here, like sending it to an API
+  };
+
+  // Define the onCancel function
+  const handleTaskCancel = () => {
+    console.log("Task creation canceled");
+    // Handle the cancelation logic here
+  };
+
   return (
     <div className="App">
       <NavBar isLoggedIn={isLoggedIn} onLogout={handleLogout} />
@@ -52,11 +64,31 @@ function App() {
           />
           <Route
             path="/createtask"
-            element={isLoggedIn ? <CreateTask /> : <Navigate to="/login" />}
+            element={
+              isLoggedIn ? (
+                <CreateTask
+                  users={[]}
+                  onSubmit={handleTaskSubmit}
+                  onCancel={handleTaskCancel}
+                />
+              ) : (
+                <Navigate to="/login" />
+              )
+            }
           />
           <Route
             path="/edittask"
-            element={isLoggedIn ? <EditTask /> : <Navigate to="/login" />}
+            element={
+              isLoggedIn ? (
+                <EditTask
+                  users={[]}
+                  onSubmit={handleTaskSubmit}
+                  onCancel={handleTaskCancel}
+                />
+              ) : (
+                <Navigate to="/login" />
+              )
+            }
           />
           <Route
             path="/tasklist"
