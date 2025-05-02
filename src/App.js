@@ -7,7 +7,7 @@ import "bootstrap/dist/css/bootstrap.min.css";
 import { Routes, Route, Navigate } from "react-router-dom";
 import Login from "./components/Login";
 import Register from "./components/Register";
-import Profile from "./components/Profile";
+// import Profile from "./components/Profile";
 import CreateTask from "./components/CreateTask";
 import EditTask from "./components/EditTask";
 import TaskList from "./components/TaskList";
@@ -58,10 +58,10 @@ function App() {
             }
           />
           <Route path="/register" element={<Register />} />
-          <Route
+          {/* <Route
             path="/profile"
             element={isLoggedIn ? <Profile /> : <Navigate to="/login" />}
-          />
+          /> */}
           <Route
             path="/createtask"
             element={

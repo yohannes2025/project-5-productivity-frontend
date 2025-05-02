@@ -43,13 +43,13 @@ function NavBar({ isLoggedIn, onLogout }) {
                 >
                   <i className="fa-solid fa-house"></i> Home Page
                 </NavLink>
-                <NavLink
+                {/* <NavLink
                   to="/profile"
                   className={`${styles.NavLink} fw-bold`}
                   onClick={handleNavClick}
                 >
                   <i className="fa-solid fa-user"></i> Profile
-                </NavLink>
+                </NavLink> */}
                 <NavLink
                   to="/CreateTask"
                   className={`${styles.NavLink} fw-bold`}
