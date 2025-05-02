@@ -36,11 +36,8 @@ const Login = ({ onLogin }) => {
 
       console.log("Login successful:", response.data); // Log success response
 
-      // Here you might want to store the token or user info
-      // For example, localStorage.setItem('token', response.data.token);
-
       onLogin(); // Invoke the onLogin prop to notify the App component
-      navigate("/"); // Redirect to home or dashboard after successful login
+      navigate("/"); // Redirect to home page after successful login
     } catch (err) {
       console.error("Login error:", err); // Log error
       setError(err.response?.data?.message || "Invalid email or password.");

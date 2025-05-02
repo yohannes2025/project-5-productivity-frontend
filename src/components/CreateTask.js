@@ -40,7 +40,7 @@ const CreateTask = ({ users = [], onSubmit, onCancel }) => {
     setTimeout(() => {
       resetForm();
       setSuccessMessage(""); // optional: auto clear after reset
-    }, 8000); // 2 seconds delay
+    }, 3000); // 3 seconds delay
   };
 
   const resetForm = () => {

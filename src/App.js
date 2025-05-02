@@ -7,7 +7,6 @@ import "bootstrap/dist/css/bootstrap.min.css";
 import { Routes, Route, Navigate } from "react-router-dom";
 import Login from "./components/Login";
 import Register from "./components/Register";
-// import Profile from "./components/Profile";
 import CreateTask from "./components/CreateTask";
 import EditTask from "./components/EditTask";
 import TaskList from "./components/TaskList";
@@ -31,8 +30,7 @@ function App() {
 
   // Define the onSubmit function
   const handleTaskSubmit = (taskData) => {
-    console.log("Task Submitted:", taskData);
-    // Handle the task creation logic here, like sending it to an API
+    // console.log("Task Submitted:", taskData);
   };
 
   // Define the onCancel function
@@ -46,22 +44,22 @@ function App() {
       <NavBar isLoggedIn={isLoggedIn} onLogout={handleLogout} />
       <Container className={styles.container}>
         <Routes>
-          <Route path="/" element={<HomePage />} />
+          {/* Redirect root to /createtask if logged in, else show HomePage or login page */}
+          <Route
+            path="/"
+            element={isLoggedIn ? <Navigate to="/createtask" /> : <HomePage />}
+          />
           <Route
             path="/login"
             element={
               isLoggedIn ? (
-                <Navigate to="/profile" />
+                <Navigate to="/createtask" />
               ) : (
                 <Login onLogin={handleLogin} />
               )
             }
           />
           <Route path="/register" element={<Register />} />
-          {/* <Route
-            path="/profile"
-            element={isLoggedIn ? <Profile /> : <Navigate to="/login" />}
-          /> */}
           <Route
             path="/createtask"
             element={

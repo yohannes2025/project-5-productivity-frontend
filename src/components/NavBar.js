@@ -1,4 +1,5 @@
-// NavBar.js
+// export default NavBar;
+
 import React, { useState, useEffect } from "react";
 import { NavLink, useLocation } from "react-router-dom";
 import { Navbar, Container, Nav } from "react-bootstrap";
@@ -36,48 +37,45 @@ function NavBar({ isLoggedIn, onLogout }) {
             <Navbar.Toggle aria-controls="navbarScroll" />
             <Navbar.Collapse id="navbarScroll">
               <Nav className="ms-auto my-2 my-lg-0" navbarScroll>
-                <NavLink
-                  to="/"
-                  className={`${styles.NavLink} fw-bold`}
-                  onClick={handleNavClick}
-                >
-                  <i className="fa-solid fa-house"></i> Home Page
-                </NavLink>
-                {/* <NavLink
-                  to="/profile"
-                  className={`${styles.NavLink} fw-bold`}
-                  onClick={handleNavClick}
-                >
-                  <i className="fa-solid fa-user"></i> Profile
-                </NavLink> */}
-                <NavLink
-                  to="/CreateTask"
-                  className={`${styles.NavLink} fw-bold`}
-                  onClick={handleNavClick}
-                >
-                  <i className="fa-solid fa-square-plus"></i> Create Task
-                </NavLink>
-                <NavLink
-                  to="/EditTask"
-                  className={`${styles.NavLink} fw-bold`}
-                  onClick={handleNavClick}
-                >
-                  <i className="fa-solid fa-file-pen"></i> Edit Task
-                </NavLink>
-                <NavLink
-                  to="/tasklist"
-                  className={`${styles.NavLink} fw-bold`}
-                  onClick={handleNavClick}
-                >
-                  <i className="fa-solid fa-list-check"></i> Task List
-                </NavLink>
-                {isLoggedIn && (
-                  <Nav.Link
-                    onClick={onLogout}
+                {!isLoggedIn && (
+                  <NavLink
+                    to="/"
                     className={`${styles.NavLink} fw-bold`}
+                    onClick={handleNavClick}
                   >
-                    <i className="fa-solid fa-sign-out-alt"></i> Logout
-                  </Nav.Link>
+                    <i className="fa-solid fa-house"></i> Home Page
+                  </NavLink>
+                )}
+                {isLoggedIn && (
+                  <>
+                    <NavLink
+                      to="/CreateTask"
+                      className={`${styles.NavLink} fw-bold`}
+                      onClick={handleNavClick}
+                    >
+                      <i className="fa-solid fa-square-plus"></i> Create Task
+                    </NavLink>
+                    <NavLink
+                      to="/EditTask"
+                      className={`${styles.NavLink} fw-bold`}
+                      onClick={handleNavClick}
+                    >
+                      <i className="fa-solid fa-file-pen"></i> Edit Task
+                    </NavLink>
+                    <NavLink
+                      to="/tasklist"
+                      className={`${styles.NavLink} fw-bold`}
+                      onClick={handleNavClick}
+                    >
+                      <i className="fa-solid fa-list-check"></i> Task List
+                    </NavLink>
+                    <Nav.Link
+                      onClick={onLogout}
+                      className={`${styles.NavLink} fw-bold`}
+                    >
+                      <i className="fa-solid fa-sign-out-alt"></i> Logout
+                    </Nav.Link>
+                  </>
                 )}
               </Nav>
             </Navbar.Collapse>
