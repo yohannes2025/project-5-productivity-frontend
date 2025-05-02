@@ -110,10 +110,26 @@
 // };
 
 // src/services/api.js (or wherever your API file is located)
+// import axios from "axios";
+
+// const api = axios.create({
+//   baseURL: "http://127.0.0.1:8000", // Adjust this to your backend URL
+//   timeout: 1000,
+//   headers: { "Content-Type": "application/json" },
+// });
+
+// export default api;
+
 import axios from "axios";
 
+const isProduction = process.env.NODE_ENV === "production";
+
+const baseURL = isProduction
+  ? process.env.REACT_APP_BACKEND_URL_PROD
+  : process.env.REACT_APP_BACKEND_URL;
+
 const api = axios.create({
-  baseURL: "http://127.0.0.1:8000", // Adjust this to your backend URL
+  baseURL: baseURL,
   timeout: 1000,
   headers: { "Content-Type": "application/json" },
 });
