@@ -91,8 +91,12 @@ const EditTask = ({ task, users = [], onSubmit, onCancel }) => {
             <Form.Label>Due Date</Form.Label>
             <DatePicker
               selected={dueDate}
-              onChange={(date) => setDueDate(date)} // Update due date state
+              onChange={(date) => setDueDate(date)}
               className="form-control"
+              // Add inputProps to provide an id to the underlying input
+              inputProps={{
+                id: "dueDate", // Use the same id as the Form.Group controlId
+              }}
             />
           </Form.Group>
           {/* Priority Selection */}

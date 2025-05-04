@@ -113,6 +113,7 @@ const CreateTask = ({ users = [], onSubmit, onCancel }) => {
               selected={dueDate}
               onChange={(date) => setDueDate(date)}
               className="form-control"
+              id="dueDate" // Add the id attribute here
             />
           </Form.Group>
           {/* Priority Selection */}
