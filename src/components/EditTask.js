@@ -87,7 +87,7 @@ const EditTask = ({ task, users = [], onSubmit, onCancel }) => {
             />
           </Form.Group>
           {/* Due Date Picker */}
-          <Form.Group controlId="taskDueDate" className="mt-3">
+          <Form.Group controlId="dueDate" className="mt-3">
             <Form.Label>Due Date</Form.Label>
             <DatePicker
               selected={dueDate}
