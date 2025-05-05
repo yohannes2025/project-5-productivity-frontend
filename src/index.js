@@ -58,16 +58,24 @@
 //   </React.StrictMode>
 // );
 
-// index.js or App.js
+// index.js;
 import React from "react";
 import ReactDOM from "react-dom/client";
 import { BrowserRouter } from "react-router-dom";
 import App from "./App"; // Make sure you have your main App component imported
 
-const root = ReactDOM.createRoot(document.getElementById("root"));
-
-root.render(
-  <BrowserRouter>
-    <App />
-  </BrowserRouter>
+ReactDOM.createRoot(document.getElementById("root")).render(
+  <React.StrictMode>
+    <BrowserRouter future={{ v7_startTransition: true }}>
+      <App />
+    </BrowserRouter>
+  </React.StrictMode>
 );
+
+// const root = ReactDOM.createRoot(document.getElementById("root"));
+
+// root.render(
+//   <BrowserRouter>
+//     <App />
+//   </BrowserRouter>
+// );

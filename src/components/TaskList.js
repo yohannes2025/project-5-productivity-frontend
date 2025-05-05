@@ -164,11 +164,11 @@ const TaskList = () => {
               </Button>
               <Button variant="warning" onClick={() => editTask(selectedTask)}>
                 {" "}
-                // Edit task details Edit
+                {/* Edit task details */}
               </Button>
               <Button variant="secondary" onClick={closeTaskDetails}>
                 {" "}
-                // Close details Close
+                {/* Close details */}
               </Button>
             </div>
           </Card>

@@ -12,6 +12,7 @@ import EditTask from "./components/EditTask";
 import TaskList from "./components/TaskList";
 import HomePage from "./components/HomePage";
 import "react-datepicker/dist/react-datepicker.css";
+import CreateTaskPage from "./components/CreateTaskPage";
 
 function App() {
   const [isLoggedIn, setIsLoggedIn] = useState(false);
@@ -64,7 +65,7 @@ function App() {
             path="/createtask"
             element={
               isLoggedIn ? (
-                <CreateTask
+                <CreateTaskPage
                   users={[]}
                   onSubmit={handleTaskSubmit}
                   onCancel={handleTaskCancel}
