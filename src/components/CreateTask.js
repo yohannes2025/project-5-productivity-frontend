@@ -1,17 +1,11 @@
-/**
- * The `CreateTask` function in the JavaScript code is a component that allows users to create a new
- * task with various details like title, description, due date, priority, category, status, assigned
- * users, and file attachments, handling form submission and displaying success or error messages
- * accordingly.
- */
-
-//CreateTask.js
-import React, { useState } from "react";
+// CreateTask.js
+import React, { useEffect, useState } from "react";
 import DatePicker from "react-datepicker";
 import "react-datepicker/dist/react-datepicker.css";
-import { Container, Card, Form, Button, Alert } from "react-bootstrap";
+import { Container, Card, Form, Button, Alert, Spinner } from "react-bootstrap";
 import styles from "../styles/Common.module.css";
 import clsx from "clsx";
+import api from "../services/api"; // Ensure correct path
 
 const CreateTask = ({ onSubmit, onCancel }) => {
   const [title, setTitle] = useState("");
@@ -22,12 +16,45 @@ const CreateTask = ({ onSubmit, onCancel }) => {
   const [status, setStatus] = useState("pending");
   const [assignedUsers, setAssignedUsers] = useState([]);
   const [files, setFiles] = useState([]);
-  const [successMessage, setSuccessMessage] = useState("");
+  const [users, setUsers] = useState([]);
+  const [loading, setLoading] = useState(true);
   const [errorMessage, setErrorMessage] = useState("");
+  const [successMessage, setSuccessMessage] = useState("");
   const [isSubmitting, setIsSubmitting] = useState(false);
 
-  const handleFileChange = (event) => {
-    setFiles(Array.from(event.target.files));
+  // Fetch users on mount
+  useEffect(() => {
+    const fetchUsers = async () => {
+      try {
+        const token = localStorage.getItem("access_token");
+
+        const usersRes = await api.get("/api/users/", {
+          headers: {
+            Authorization: `Bearer ${token}`, // Add token to request
+          },
+        });
+
+        setUsers(usersRes.data);
+      } catch (error) {
+        console.error(error);
+        setErrorMessage("Failed to load users.");
+      } finally {
+        setLoading(false);
+      }
+    };
+
+    fetchUsers();
+  }, []);
+
+  const handleAssignedUserChange = (e) => {
+    const selected = Array.from(e.target.selectedOptions).map(
+      (opt) => opt.value
+    );
+    setAssignedUsers(selected);
+  };
+
+  const handleFileChange = (e) => {
+    setFiles(Array.from(e.target.files));
   };
 
   const resetForm = () => {
@@ -39,12 +66,12 @@ const CreateTask = ({ onSubmit, onCancel }) => {
     setStatus("pending");
     setAssignedUsers([]);
     setFiles([]);
-    setSuccessMessage(""); // Also clear messages on reset
+    setSuccessMessage("");
     setErrorMessage("");
   };
 
-  const handleSubmit = async (event) => {
-    event.preventDefault();
+  const handleSubmit = async (e) => {
+    e.preventDefault();
     setErrorMessage("");
     setSuccessMessage("");
     setIsSubmitting(true);
@@ -80,12 +107,20 @@ const CreateTask = ({ onSubmit, onCancel }) => {
   };
 
   const handleCancel = () => {
-    resetForm(); // Call resetForm to clear all form data
+    resetForm();
     if (onCancel) {
-      // Check if onCancel prop was provided
-      onCancel(); // Call the provided onCancel function
+      onCancel();
     }
   };
+
+  if (loading) {
+    return (
+      <Container className="text-center mt-5">
+        <Spinner animation="border" />
+        <p>Loading users...</p>
+      </Container>
+    );
+  }
 
   return (
     <Container
@@ -183,16 +218,21 @@ const CreateTask = ({ onSubmit, onCancel }) => {
           </Form.Group>
 
           <Form.Group controlId="assignedUsers" className="mt-3">
-            <Form.Label>Assigned Users (comma-separated)</Form.Label>
-            <Form.Control
-              type="text"
-              value={assignedUsers.join(", ")}
-              onChange={(e) =>
-                setAssignedUsers(
-                  e.target.value.split(",").map((user) => user.trim())
-                )
-              }
-            />
+            <Form.Label>Assigned Users</Form.Label>
+            <Form.Select
+              multiple
+              value={assignedUsers}
+              onChange={handleAssignedUserChange}
+            >
+              {users.map((user) => (
+                <option key={user.id} value={user.id}>
+                  {user.username}
+                </option>
+              ))}
+            </Form.Select>
+            <Form.Text className="text-muted">
+              Select users to assign to this task.
+            </Form.Text>
           </Form.Group>
 
           <Form.Group controlId="taskFiles" className="mt-3">
@@ -219,7 +259,7 @@ const CreateTask = ({ onSubmit, onCancel }) => {
             <Button
               variant="outline-secondary"
               type="button"
-              onClick={handleCancel} // Call the new handleCancel function
+              onClick={handleCancel}
             >
               Cancel
             </Button>
