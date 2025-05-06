@@ -1,9 +1,16 @@
-// CreateTask.js
+/**
+ * The `CreateTask` function in the JavaScript code is a component that allows users to create a new
+ * task with various details like title, description, due date, priority, category, status, assigned
+ * users, and file attachments, handling form submission and displaying success or error messages
+ * accordingly.
+ */
+
+//CreateTask.js
 import React, { useState } from "react";
 import DatePicker from "react-datepicker";
 import "react-datepicker/dist/react-datepicker.css";
 import { Container, Card, Form, Button, Alert } from "react-bootstrap";
-import styles from "../styles/Common.module.css"; // You might need to adjust this path
+import styles from "../styles/Common.module.css";
 import clsx from "clsx";
 
 const CreateTask = ({ onSubmit, onCancel }) => {
@@ -13,8 +20,7 @@ const CreateTask = ({ onSubmit, onCancel }) => {
   const [priority, setPriority] = useState("medium");
   const [category, setCategory] = useState("development");
   const [status, setStatus] = useState("pending");
-  // Keep assignedUsers as strings for the input field
-  const [assignedUsersInput, setAssignedUsersInput] = useState("");
+  const [assignedUsers, setAssignedUsers] = useState([]);
   const [files, setFiles] = useState([]);
   const [successMessage, setSuccessMessage] = useState("");
   const [errorMessage, setErrorMessage] = useState("");
@@ -31,7 +37,7 @@ const CreateTask = ({ onSubmit, onCancel }) => {
     setPriority("medium");
     setCategory("development");
     setStatus("pending");
-    setAssignedUsersInput(""); // Reset the input string
+    setAssignedUsers([]);
     setFiles([]);
     setSuccessMessage(""); // Also clear messages on reset
     setErrorMessage("");
@@ -43,17 +49,6 @@ const CreateTask = ({ onSubmit, onCancel }) => {
     setSuccessMessage("");
     setIsSubmitting(true);
 
-    // Parse the comma-separated string into an array of numbers
-    const assignedUserIds = assignedUsersInput
-      .split(",")
-      .map((userIdStr) => {
-        const trimmedStr = userIdStr.trim();
-        // Attempt to parse as integer, return null if not a valid number
-        const parsedId = parseInt(trimmedStr, 10);
-        return isNaN(parsedId) ? null : parsedId;
-      })
-      .filter((id) => id !== null); // Remove any null entries resulting from invalid input
-
     const taskData = {
       title,
       description,
@@ -61,7 +56,7 @@ const CreateTask = ({ onSubmit, onCancel }) => {
       priority,
       category,
       status,
-      assignedUsers: assignedUserIds, // Pass the parsed array of IDs
+      assignedUsers,
       files,
     };
 
@@ -74,8 +69,6 @@ const CreateTask = ({ onSubmit, onCancel }) => {
       }, 3000);
     } catch (error) {
       console.error("Task creation failed:", error);
-      // The error handling in CreateTaskPage will show a detailed alert
-      // You can add more specific error handling here if needed based on error.response.data
       setErrorMessage(
         error?.response?.data?.detail ||
           error?.message ||
@@ -190,16 +183,16 @@ const CreateTask = ({ onSubmit, onCancel }) => {
           </Form.Group>
 
           <Form.Group controlId="assignedUsers" className="mt-3">
-            <Form.Label>Assigned User IDs (comma-separated)</Form.Label>
+            <Form.Label>Assigned Users (comma-separated)</Form.Label>
             <Form.Control
               type="text"
-              value={assignedUsersInput}
-              onChange={(e) => setAssignedUsersInput(e.target.value)}
-              placeholder="e.g., 1, 5, 10"
+              value={assignedUsers.join(", ")}
+              onChange={(e) =>
+                setAssignedUsers(
+                  e.target.value.split(",").map((user) => user.trim())
+                )
+              }
             />
-            <Form.Text className="text-muted">
-              Enter user IDs separated by commas.
-            </Form.Text>
           </Form.Group>
 
           <Form.Group controlId="taskFiles" className="mt-3">
