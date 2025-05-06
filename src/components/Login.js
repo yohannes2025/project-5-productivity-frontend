@@ -132,11 +132,9 @@ const Login = ({ onLogin }) => {
         { timeout: 5000 } // Set timeout to 5000ms
       );
 
-      // Save tokens to localStorage using consistent snake_case
+      console.log("Access Token:", localStorage.getItem("access_token"));
       localStorage.setItem("access_token", response.data.access);
       localStorage.setItem("refresh_token", response.data.refresh);
-
-      console.log("Access Token:", localStorage.getItem("access_token"));
 
       console.log("Login successful:", response.data); // Log success response
 
