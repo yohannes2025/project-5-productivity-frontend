@@ -1,3 +1,4 @@
+<<<<<<< HEAD
 // // // //CreateTask.js
 // // // import React, { useState } from "react";
 // // // import DatePicker from "react-datepicker";
@@ -799,6 +800,8 @@
 
 // export default CreateTask;
 
+=======
+>>>>>>> 707d259586688eeb79bd7d67706cd39fe8f9acac
 //CreateTask.js
 import React, { useState } from "react";
 import DatePicker from "react-datepicker";
