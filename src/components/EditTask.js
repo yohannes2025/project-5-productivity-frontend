@@ -272,7 +272,7 @@ const EditTask = ({ onCancel }) => {
 
           <div className="d-flex justify-content-between mt-4">
             <Button variant="primary" type="submit" disabled={submitting}>
-              {submitting ? "Saving..." : "Update Task"}
+              {submitting ? "Saving..." : "Edit Task"}
             </Button>
             <Button
               variant="outline-secondary"
