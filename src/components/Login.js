@@ -132,13 +132,10 @@ const Login = ({ onLogin }) => {
         { timeout: 5000 } // Set timeout to 5000ms
       );
 
-<<<<<<< HEAD
       console.log("Access Token:", localStorage.getItem("access_token"));
       localStorage.setItem("access_token", response.data.access);
       localStorage.setItem("refresh_token", response.data.refresh);
 
-=======
->>>>>>> 707d259586688eeb79bd7d67706cd39fe8f9acac
       console.log("Login successful:", response.data); // Log success response
 
       onLogin(); // Invoke the onLogin prop to notify the App component
