@@ -1,6 +1,6 @@
 // Register.js
 import React, { useState } from "react";
-import api from "../services/api"; // Assuming 'api' already has a base URL set
+import api from "../services/api"; // 'api' already has a base URL set
 import { useNavigate, Link } from "react-router-dom";
 import {
   Container,

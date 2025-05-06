@@ -18,7 +18,6 @@ const CreateTaskPage = () => {
       formData.append("status", taskData.status.toLowerCase());
 
       // ✅ Corrected: Append each assigned user ID individually
-      // This is the standard way to send an array of values in FormData
       if (taskData.assignedUsers && taskData.assignedUsers.length > 0) {
         taskData.assignedUsers.forEach((userId) => {
           formData.append("assigned_users", userId);
@@ -60,7 +59,6 @@ const CreateTaskPage = () => {
           headers: {
             Authorization: `Bearer ${token}`,
             // "Content-Type": "multipart/form-data" is automatically set by axios
-            // when sending FormData, so you can often omit it.
           },
         }
       );
