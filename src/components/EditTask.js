@@ -1,6 +1,6 @@
 // src/components/EditTask.js
 import React, { useEffect, useState } from "react";
-import { useParams } from "react-router-dom";
+import { useParams, useNavigate } from "react-router-dom";
 import DatePicker from "react-datepicker";
 import "react-datepicker/dist/react-datepicker.css";
 import { Container, Card, Form, Button, Alert, Spinner } from "react-bootstrap";
@@ -9,8 +9,9 @@ import clsx from "clsx";
 import api from "../services/api";
 import { format } from "date-fns";
 
-const EditTask = ({ onCancel }) => {
+const EditTask = () => {
   const { id } = useParams();
+  const navigate = useNavigate();
 
   const [title, setTitle] = useState("");
   const [description, setDescription] = useState("");
@@ -48,12 +49,10 @@ const EditTask = ({ onCancel }) => {
         const task = taskRes.data;
         setTitle(task.title);
         setDescription(task.description);
-        // Ensure due_date is a valid Date object
         setDueDate(task.due_date ? new Date(task.due_date) : new Date());
         setPriority(task.priority);
         setCategory(task.category);
         setStatus(task.status);
-        // Ensure assigned_users are stored as strings to match select option values
         setAssignedUsers(task.assigned_users.map((u) => String(u)));
         setUsers(usersRes.data);
       } catch (error) {
@@ -88,27 +87,20 @@ const EditTask = ({ onCancel }) => {
     formData.append("title", title);
     formData.append("description", description);
 
-    // Append due_date, ensuring it's a valid date and in ISO format
     if (dueDate instanceof Date && !isNaN(dueDate)) {
-      formData.append("due_date", format(dueDate, "yyyy-MM-dd")); // Format to YYYY-MM-DD
+      formData.append("due_date", format(dueDate, "yyyy-MM-dd"));
     } else {
-      // Handle case where dueDate is not a valid Date
       console.warn("Invalid due date, not appending to form data.");
-      // setSubmitting(false);
-      // return; // Prevent submission if date is invalid
     }
 
     formData.append("priority", priority);
     formData.append("category", category);
     formData.append("status", status);
 
-    // **Correction for assigned_users in multipart/form-data**
-    // Append each assigned user ID individually
     assignedUsers.forEach((userId) => {
       formData.append("assigned_users", Number(userId));
     });
 
-    // Append files
     files.forEach((file) => formData.append("upload_files", file));
 
     try {
@@ -121,14 +113,14 @@ const EditTask = ({ onCancel }) => {
         },
       });
       setSuccessMessage("Task updated successfully!");
-      // Optionally call onCancel() here to close the edit form on success
-      // if (onCancel) onCancel();
+      // **CORRECTED NAVIGATION PATH**
+      navigate("/tasklist", {
+        state: { message: "Edit successful", type: "success" },
+      }); // Navigate to /tasklist
     } catch (error) {
       console.error("Error updating task:", error);
-      // **Improved Error Logging**
       if (error.response && error.response.data) {
         console.error("Backend validation errors:", error.response.data);
-        // Display a generic error message, the specific details are in the console
         setErrorMessage(
           "Failed to update the task. Please check the console for details."
         );
@@ -140,6 +132,13 @@ const EditTask = ({ onCancel }) => {
     } finally {
       setSubmitting(false);
     }
+  };
+
+  const handleCancel = () => {
+    // **CORRECTED NAVIGATION PATH**
+    navigate("/tasklist", {
+      state: { message: "Edit cancelled", type: "info" },
+    }); // Navigate to /tasklist
   };
 
   if (loading) {
@@ -165,7 +164,7 @@ const EditTask = ({ onCancel }) => {
       <Card className="p-4 shadow" style={{ width: "100%", maxWidth: "600px" }}>
         <h3 className="text-center mb-4">Edit Task</h3>
 
-        {successMessage && <Alert variant="success">{successMessage}</Alert>}
+        {/* We will display messages in the Tasklist component */}
         {errorMessage && <Alert variant="danger">{errorMessage}</Alert>}
 
         <Form onSubmit={handleSubmit}>
@@ -257,7 +256,6 @@ const EditTask = ({ onCancel }) => {
               onChange={handleAssignedUserChange}
             >
               {users.map((user) => (
-                // Ensure the value is a string to match state
                 <option key={user.id} value={String(user.id)}>
                   {user.name || user.username}
                 </option>
@@ -277,7 +275,7 @@ const EditTask = ({ onCancel }) => {
             <Button
               variant="outline-secondary"
               type="button"
-              onClick={onCancel}
+              onClick={handleCancel}
             >
               Cancel
             </Button>
