@@ -59,7 +59,6 @@ const TaskList = () => {
         // Fetch tasks
         const tasksResponse = await api.get(TASKS_API_ENDPOINT);
         setTasks(tasksResponse.data);
-
         // Fetch users
         const usersResponse = await api.get(USERS_API_ENDPOINT);
         setUsers(usersResponse.data);
@@ -225,7 +224,8 @@ const TaskList = () => {
         "d-flex",
         "flex-column",
         "justify-content-center",
-        "align-items-center"
+        "align-items-center",
+        "mt-5"
       )}
     >
       <Card className="p-4 shadow w-100" style={{ maxWidth: "960px" }}>
@@ -336,7 +336,7 @@ const TaskList = () => {
                         : "No Due Date"}
                     </td>
                     <td>{task.priority}</td>
-                    <td>{task.category}</td> {/* Display category */}
+                    <td>{task.category}</td>
                     <td>{task.status}</td>
                     <td>
                       {task.assigned_users && Array.isArray(task.assigned_users)

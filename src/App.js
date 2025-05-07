@@ -7,16 +7,15 @@ import "bootstrap/dist/css/bootstrap.min.css";
 import { Routes, Route, Navigate } from "react-router-dom";
 import Login from "./components/Login";
 import Register from "./components/Register";
-import CreateTask from "./components/CreateTask"; // Keep if CreateTaskPage uses it internally
+import CreateTask from "./components/CreateTask"; // CreateTaskPage uses it internally
 import EditTask from "./components/EditTask";
 import TaskList from "./components/TaskList";
 import HomePage from "./components/HomePage";
 import "react-datepicker/dist/react-datepicker.css";
-import CreateTaskPage from "./components/CreateTaskPage"; // this is a wrapper/page component
+import CreateTaskPage from "./components/CreateTaskPage"; // a wrapper/page component
 
 function App() {
   const [isLoggedIn, setIsLoggedIn] = useState(false);
-
   const handleLogin = () => {
     setIsLoggedIn(true);
   };
@@ -28,12 +27,12 @@ function App() {
 
   // (EditTask handles submission internally)
   const handleTaskSubmit = (taskData) => {
-    // This is likely for CreateTaskPage, EditTask uses its own submit
+    // CreateTaskPage, EditTask uses its own submit
   };
 
   const handleTaskCancel = () => {
     console.log("Task creation canceled");
-    // This is for CreateTaskPage
+    // CreateTaskPage
   };
 
   return (
@@ -65,8 +64,7 @@ function App() {
             path="/createtask"
             element={
               isLoggedIn ? (
-                // Assuming CreateTaskPage is the correct component for this route
-                // and it handles the onSubmit/onCancel props
+                // handles the onSubmit/onCancel props
                 <CreateTaskPage
                   users={[]} // Pass necessary props when CreateTaskPage needs them
                   onSubmit={handleTaskSubmit}
@@ -78,15 +76,12 @@ function App() {
             }
           />
 
-          {/* **CORRECTED ROUTE FOR EDITING TASKS** */}
           {/* Use a URL parameter :id to capture the task ID */}
           <Route
             path="/edittask/:id" // <-- ADDED :id parameter
             element={
               isLoggedIn ? (
                 // EditTask component fetches data based on the ID from the URL
-                // It handles its own submission internally, so onSubmit/onCancel props
-                // are likely not needed here, unless EditTask has specific needs for parent communication
                 <EditTask
                 // onSubmit={handleTaskSubmit}
                 // onCancel={handleTaskCancel}
@@ -102,9 +97,6 @@ function App() {
             path="/tasklist"
             element={isLoggedIn ? <TaskList /> : <Navigate to="/login" />}
           />
-
-          {/* Optional: Add a catch-all route for unmatched paths */}
-          {/* <Route path="*" element={<NotFoundPage />} /> */}
         </Routes>
       </Container>
     </div>

@@ -5,7 +5,7 @@ import "react-datepicker/dist/react-datepicker.css";
 import { Container, Card, Form, Button, Alert, Spinner } from "react-bootstrap";
 import styles from "../styles/Common.module.css";
 import clsx from "clsx";
-import api from "../services/api"; // Ensure correct path
+import api from "../services/api";
 
 const CreateTask = ({ onSubmit, onCancel }) => {
   const [title, setTitle] = useState("");
@@ -30,7 +30,7 @@ const CreateTask = ({ onSubmit, onCancel }) => {
 
         const usersRes = await api.get("/api/users/", {
           headers: {
-            Authorization: `Bearer ${token}`, // Add token to request
+            Authorization: `Bearer ${token}`,
           },
         });
 
@@ -108,9 +108,7 @@ const CreateTask = ({ onSubmit, onCancel }) => {
 
   const handleCancel = () => {
     resetForm();
-    if (onCancel) {
-      onCancel();
-    }
+    if (onCancel) onCancel();
   };
 
   if (loading) {
@@ -130,7 +128,7 @@ const CreateTask = ({ onSubmit, onCancel }) => {
         "flex-column",
         "justify-content-center",
         "align-items-center",
-        "mt-5 mt-md-3"
+        "mt-5"
       )}
     >
       <Card className="p-4 shadow" style={{ width: "100%", maxWidth: "600px" }}>

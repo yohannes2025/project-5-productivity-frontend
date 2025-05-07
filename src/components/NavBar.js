@@ -56,13 +56,6 @@ function NavBar({ isLoggedIn, onLogout }) {
                       <i className="fa-solid fa-square-plus"></i> Create Task
                     </NavLink>
                     <NavLink
-                      to="/EditTask"
-                      className={`${styles.NavLink} fw-bold`}
-                      onClick={handleNavClick}
-                    >
-                      <i className="fa-solid fa-file-pen"></i> Edit Task
-                    </NavLink>
-                    <NavLink
                       to="/tasklist"
                       className={`${styles.NavLink} fw-bold`}
                       onClick={handleNavClick}

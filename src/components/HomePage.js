@@ -3,7 +3,7 @@ import React from "react";
 import { Container, Row, Col, Button } from "react-bootstrap";
 import { Link } from "react-router-dom";
 import styles from "../styles/Common.module.css";
-import clsx from "clsx"; // Import clsx
+import clsx from "clsx";
 
 const HomePage = () => {
   return (

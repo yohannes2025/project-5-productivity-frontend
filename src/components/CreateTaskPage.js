@@ -1,10 +1,9 @@
 // CreateTaskPage.js
 import React, { useState } from "react";
 import axios from "axios";
-import CreateTask from "./CreateTask"; // Import the separate CreateTask component
+import CreateTask from "./CreateTask";
 
 const CreateTaskPage = () => {
-  // Add a state variable for debugging
   const [debugData, setDebugData] = useState(null);
 
   const handleCreateTask = async (taskData) => {
@@ -17,26 +16,21 @@ const CreateTaskPage = () => {
       formData.append("category", taskData.category);
       formData.append("status", taskData.status.toLowerCase());
 
-      // ✅ Corrected: Append each assigned user ID individually
-      if (taskData.assignedUsers && taskData.assignedUsers.length > 0) {
+      if (taskData.assignedUsers?.length > 0) {
         taskData.assignedUsers.forEach((userId) => {
           formData.append("assigned_users", userId);
         });
       }
 
-      // ✅ Append files (if any)
-      if (taskData.files && taskData.files.length > 0) {
+      if (taskData.files?.length > 0) {
         taskData.files.forEach((file) => formData.append("upload_files", file));
       }
 
-      // ✅ Include Authorization token
       const token = localStorage.getItem("access_token");
 
-      // ✅ Debugging:  Set the state variable *before* the axios call
-      // Convert formData to an object for easier debugging display
+      // Convert FormData to object for debugging
       const formDataObject = {};
       formData.forEach((value, key) => {
-        // Handle appending arrays correctly for display
         if (formDataObject[key]) {
           if (!Array.isArray(formDataObject[key])) {
             formDataObject[key] = [formDataObject[key]];
@@ -48,8 +42,8 @@ const CreateTaskPage = () => {
       });
 
       setDebugData({
-        taskData: taskData, // Include the original taskData for comparison
-        formData: formDataObject, // Show form data as an object
+        taskData,
+        formData: formDataObject,
       });
 
       const response = await axios.post(
@@ -58,7 +52,7 @@ const CreateTaskPage = () => {
         {
           headers: {
             Authorization: `Bearer ${token}`,
-            // "Content-Type": "multipart/form-data" is automatically set by axios
+            // 'Content-Type' is automatically set by Axios when using FormData
           },
         }
       );
@@ -73,12 +67,10 @@ const CreateTaskPage = () => {
         console.error("Network or unknown error:", err.message);
         alert("Network error: " + err.message);
       }
-      // Re-throw the error so CreateTask can catch it and display an error message
       throw err;
     }
   };
 
-  // ✅ Debugging:  Display the debug data in the component
   return (
     <>
       {debugData && (

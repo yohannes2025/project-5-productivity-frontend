@@ -1,6 +1,6 @@
 // Register.js
 import React, { useState } from "react";
-import api from "../services/api"; // 'api' already has a base URL set
+import api from "../services/api";
 import { useNavigate, Link } from "react-router-dom";
 import {
   Container,
@@ -46,14 +46,13 @@ const Register = () => {
           password,
           confirm_password: confirmPassword,
         },
-        { timeout: 5000 } // Set timeout to 5000ms
+        { timeout: 5000 }
       );
 
-      console.log("Registration successful:", response.data); // Log success response
       // Redirect the user to the login page after successful registration
       navigate("/login");
     } catch (err) {
-      console.error("Registration error:", err); // Log error
+      console.error("Registration error:", err);
       setError(
         err.response?.data?.message || "An error occurred during registration."
       );
