@@ -52,7 +52,7 @@ const Register = () => {
       // Redirect the user to the login page after successful registration
       navigate("/login");
     } catch (err) {
-      console.error("Registration error:", err);
+      // console.error("Registration error:", err);
       setError(
         err.response?.data?.message || "An error occurred during registration."
       );

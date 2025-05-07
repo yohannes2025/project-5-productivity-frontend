@@ -63,7 +63,7 @@ const TaskList = () => {
         const usersResponse = await api.get(USERS_API_ENDPOINT);
         setUsers(usersResponse.data);
       } catch (err) {
-        console.error("Failed to load data:", err);
+        // console.error("Failed to load data:", err);
         setError(
           err.response?.data?.detail || err.message || "Unable to load data."
         );
@@ -154,9 +154,8 @@ const TaskList = () => {
           status: "done",
         }));
       }
-      console.log("Task marked complete successfully!");
     } catch (err) {
-      console.error("Failed to mark task complete:", err);
+      // console.error("Failed to mark task complete:", err);
       setError("Failed to mark task complete. Please try again.");
     } finally {
       setCompletingTaskId(null);
@@ -187,9 +186,8 @@ const TaskList = () => {
       if (selectedTask && selectedTask.id === taskToDelete.id) {
         setSelectedTask(null);
       }
-      console.log(`Task ${taskToDelete.id} deleted successfully!`);
     } catch (err) {
-      console.error("Failed to delete task:", err);
+      // console.error("Failed to delete task:", err);
       setError(
         err.response?.data?.detail ||
           err.message ||
