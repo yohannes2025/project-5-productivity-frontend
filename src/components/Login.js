@@ -40,7 +40,7 @@ const Login = ({ onLogin }) => {
       onLogin();
       navigate("/"); // Redirect to home page after successful login
     } catch (err) {
-      console.error("Login error:", err);
+      // console.error("Login error:", err);
       setError(err.response?.data?.message || "Invalid email or password.");
     }
   };

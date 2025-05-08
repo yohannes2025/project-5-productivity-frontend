@@ -70,7 +70,7 @@ api.interceptors.response.use(
           return api(originalRequest);
         } else {
           // No refresh token available, or refresh failed
-          console.error("No refresh token available. Redirecting to login.");
+          // console.error("No refresh token available. Redirecting to login.");
           // Clear any potentially invalid tokens
           localStorage.removeItem("access_token");
           localStorage.removeItem("refresh_token");
@@ -78,7 +78,7 @@ api.interceptors.response.use(
           window.location.href = "/login";
         }
       } catch (refreshError) {
-        console.error("Failed to refresh token:", refreshError);
+        // console.error("Failed to refresh token:", refreshError);
         // Clear tokens and redirect to login
         localStorage.removeItem("access_token");
         localStorage.removeItem("refresh_token");
