@@ -207,7 +207,7 @@ const EditTask = () => {
             <DatePicker
               id="dueDate"
               name="dueDate"
-              selected={dueDate}
+              selected={dueDate || new Date()}
               onChange={(date) => setDueDate(date)}
               className="form-control"
               required

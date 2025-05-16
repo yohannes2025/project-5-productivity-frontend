@@ -170,7 +170,7 @@ const CreateTask = ({ onSubmit, onCancel }) => {
           <Form.Group controlId="dueDate" className="mt-3">
             <Form.Label>Due Date</Form.Label>
             <DatePicker
-              selected={dueDate}
+              selected={dueDate || new Date()}
               onChange={(date) => setDueDate(date)}
               className="form-control"
               required
