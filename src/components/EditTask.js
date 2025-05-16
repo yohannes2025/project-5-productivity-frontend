@@ -42,7 +42,6 @@ const EditTask = () => {
     const fetchTaskAndUsers = async () => {
       try {
         const token = localStorage.getItem("access_token");
-
         const [taskRes, usersRes] = await Promise.all([
           api.get(`/api/tasks/${id}/`, {
             headers: {
@@ -67,7 +66,7 @@ const EditTask = () => {
         setAssignedUsers(task.assigned_users.map((u) => String(u)));
         setUsers(usersRes.data);
       } catch (error) {
-        console.error("Error fetching task or users:", error);
+        // console.error("Error fetching task or users:", error);
         setErrorMessage("Failed to load task or users.");
       } finally {
         setLoading(false);
@@ -101,7 +100,7 @@ const EditTask = () => {
     if (dueDate instanceof Date && !isNaN(dueDate)) {
       formData.append("due_date", format(dueDate, "yyyy-MM-dd"));
     } else {
-      console.warn("Invalid due date, not appending to form data.");
+      // console.warn("Invalid due date, not appending to form data.");
     }
 
     formData.append("priority", priority);
@@ -128,9 +127,9 @@ const EditTask = () => {
         state: { message: "Edit successful", type: "success" },
       });
     } catch (error) {
-      console.error("Error updating task:", error);
+      // console.error("Error updating task:", error);
       if (error.response && error.response.data) {
-        console.error("Backend validation errors:", error.response.data);
+        // console.error("Backend validation errors:", error.response.data);
         setErrorMessage(
           "Failed to update the task. Please check the console for details."
         );

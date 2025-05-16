@@ -57,14 +57,13 @@ const CreateTaskPage = () => {
         }
       );
 
-      console.log("Task created successfully:", response.data);
       return response.data;
     } catch (err) {
       if (err.response) {
-        console.error("Server validation errors:", err.response.data);
+        // console.error("Server validation errors:", err.response.data);
         alert("Task creation failed: " + JSON.stringify(err.response.data));
       } else {
-        console.error("Network or unknown error:", err.message);
+        // console.error("Network or unknown error:", err.message);
         alert("Network error: " + err.message);
       }
       throw err;

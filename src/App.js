@@ -31,7 +31,6 @@ function App() {
   };
 
   const handleTaskCancel = () => {
-    console.log("Task creation canceled");
     // CreateTaskPage
   };
 
