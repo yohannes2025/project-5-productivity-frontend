@@ -204,14 +204,27 @@ const EditTask = () => {
 
           <Form.Group className="mt-3">
             <Form.Label htmlFor="dueDate">Due Date</Form.Label>
-            <DatePicker
+            {/* <DatePicker
               id="dueDate"
               name="dueDate"
-              selected={dueDate instanceof Date ? dueDate : new Date()}
+              selected={dueDate}
               onChange={(date) => setDueDate(date)}
               className="form-control"
               required
               dateFormat="yyyy-MM-dd" // Specify date format
+            /> */}
+            <DatePicker
+              id="dueDate"
+              name="dueDate"
+              selected={
+                dueDate && dueDate instanceof Date && !isNaN(dueDate)
+                  ? dueDate
+                  : new Date()
+              }
+              onChange={(date) => setDueDate(date)}
+              className="form-control"
+              required
+              dateFormat="yyyy-MM-dd"
             />
           </Form.Group>
 

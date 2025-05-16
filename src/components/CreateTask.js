@@ -167,15 +167,28 @@ const CreateTask = ({ onSubmit, onCancel }) => {
             />
           </Form.Group>
 
-          <Form.Group controlId="dueDate" className="mt-3">
+          {/* <Form.Group controlId="dueDate" className="mt-3">
             <Form.Label>Due Date</Form.Label>
             <DatePicker
-              selected={dueDate instanceof Date ? dueDate : new Date()}
+              selected={dueDate}
               onChange={(date) => setDueDate(date)}
               className="form-control"
               required
             />
-          </Form.Group>
+          </Form.Group> */}
+          <DatePicker
+            id="dueDate"
+            name="dueDate"
+            selected={
+              dueDate && dueDate instanceof Date && !isNaN(dueDate)
+                ? dueDate
+                : new Date()
+            }
+            onChange={(date) => setDueDate(date)}
+            className="form-control"
+            required
+            dateFormat="yyyy-MM-dd"
+          />
 
           <Form.Group controlId="taskPriority" className="mt-3">
             <Form.Label>Priority</Form.Label>
