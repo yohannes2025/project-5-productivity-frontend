@@ -171,7 +171,9 @@ const CreateTask = ({ onSubmit, onCancel }) => {
             <Form.Label>Due Date</Form.Label>
             <DatePicker
               selected={
-                dueDate instanceof Date && !isNaN(dueDate) ? dueDate : null
+                dueDate instanceof Date && !isNaN(dueDate.getTime())
+                  ? dueDate
+                  : null
               }
               onChange={(date) => setDueDate(date)}
               className="form-control"
