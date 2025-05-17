@@ -17,7 +17,7 @@
     "react-dom": "^18.3.1",
     "react-infinite-scroll-component": "^6.1.0",
     "react-router-dom": "^6.30.0",
-    "react-scripts": "^3.0.1",
+    "react-scripts": "^5.0.1",
     "styled-components": "^6.1.17",
     "web-vitals": "^1.1.2"
   },
@@ -53,8 +53,8 @@
     "vite-plugin-node-polyfills": "^0.23.0"
   },
   "engines": {
-    "node": "16.19.1",
-    "npm": "8.19.3"
+    "node": "18.20.8",
+    "npm": "10.8.2"
   },
   "proxy": "http://localhost:8000/"
 }
