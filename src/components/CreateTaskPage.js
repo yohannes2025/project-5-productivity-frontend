@@ -267,101 +267,79 @@
 
 // export default CreateTaskPage;
 
-// src/components/CreateTaskPage.js
 import React, { useState } from "react";
-import axios from "axios";
 import CreateTask from "./CreateTask";
 
 const CreateTaskPage = () => {
-  const [debugData, setDebugData] = useState(null);
+  const [taskData, setTaskData] = useState({
+    title: "",
+    description: "",
+    dueDate: null, // Crucial: initialize dueDate to null or undefined
+  });
 
-  const handleCreateTask = async (taskData) => {
-    try {
-      // Convert dueDate (which is a Date object) to a string in ISO format yyyy-mm-dd
-      const dueDateString = taskData.dueDate
-        ? taskData.dueDate.toISOString().split("T")[0]
-        : null;
+  const [errors, setErrors] = useState({}); // Store validation errors
 
-      // Prepare form data
-      const formData = new FormData();
-      formData.append("title", taskData.title);
-      formData.append("description", taskData.description);
-      if (dueDateString) {
-        formData.append("due_date", dueDateString);
+  const handleChange = (e) => {
+    const { name, value } = e.target;
+    setTaskData({ ...taskData, [name]: value });
+    setErrors({}); // Clear errors when input changes
+  };
+
+  const handleDateChange = (date) => {
+    setTaskData({ ...taskData, dueDate: date });
+  };
+
+  const handleSubmit = async (e) => {
+    e.preventDefault();
+
+    // Basic validation (add more as needed)
+    const newErrors = {};
+    if (!taskData.title) {
+      newErrors.title = "Title is required";
+    }
+
+    setErrors(newErrors);
+
+    if (Object.keys(newErrors).length === 0) {
+      try {
+        // Replace with your actual API call
+        const response = await axios.post("/api/tasks", taskData); // Replace /api/tasks
+        console.log("Task created:", response.data);
+        // Clear form after successful submission
+        setTaskData({ title: "", description: "", dueDate: null });
+      } catch (error) {
+        console.error("Error creating task:", error);
+        // Handle errors appropriately (e.g., display error messages to the user)
       }
-      formData.append("priority", taskData.priority);
-      formData.append("category", taskData.category);
-      formData.append("status", taskData.status.toLowerCase());
-
-      if (taskData.assignedUsers?.length > 0) {
-        taskData.assignedUsers.forEach((userId) => {
-          formData.append("assigned_users", userId);
-        });
-      }
-
-      if (taskData.files?.length > 0) {
-        taskData.files.forEach((file) => formData.append("upload_files", file));
-      }
-
-      const token = localStorage.getItem("access_token");
-
-      // For debugging: convert FormData to object
-      const formDataObject = {};
-      formData.forEach((value, key) => {
-        if (formDataObject[key]) {
-          if (!Array.isArray(formDataObject[key])) {
-            formDataObject[key] = [formDataObject[key]];
-          }
-          formDataObject[key].push(value);
-        } else {
-          formDataObject[key] = value;
-        }
-      });
-
-      setDebugData({
-        taskData,
-        formData: formDataObject,
-      });
-
-      // Make API request
-      const response = await axios.post(
-        "http://localhost:8000/api/tasks/",
-        formData,
-        {
-          headers: {
-            Authorization: `Bearer ${token}`,
-          },
-        }
-      );
-
-      return response.data;
-    } catch (err) {
-      if (err.response) {
-        alert("Task creation failed: " + JSON.stringify(err.response.data));
-      } else {
-        alert("Network error: " + err.message);
-      }
-      throw err;
     }
   };
 
   return (
-    <>
-      {debugData && (
-        <div
-          style={{
-            backgroundColor: "#f0f0f0",
-            padding: "20px",
-            margin: "20px",
-            border: "1px solid #ccc",
-          }}
-        >
-          <h3 style={{ margin: "0 0 10px 0" }}>Debug Data:</h3>
-          <pre>{JSON.stringify(debugData, null, 2)}</pre>
-        </div>
-      )}
-      <CreateTask onSubmit={handleCreateTask} />
-    </>
+    <div>
+      <h2>Create Task</h2>
+      <form onSubmit={handleSubmit}>
+        <label htmlFor="title">Title:</label>
+        <input
+          type="text"
+          id="title"
+          name="title"
+          value={taskData.title}
+          onChange={handleChange}
+          required
+        />
+        {errors.title && <p style={{ color: "red" }}>{errors.title}</p>}
+        <label htmlFor="description">Description:</label>
+        <textarea
+          id="description"
+          name="description"
+          value={taskData.description}
+          onChange={handleChange}
+        />
+        <CreateTask dueDate={taskData.dueDate} onChange={handleDateChange} />{" "}
+        {/* Pass dueDate */}
+        <button type="submit">Create Task</button>
+      </form>
+    </div>
   );
 };
 
