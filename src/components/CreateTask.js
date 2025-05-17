@@ -2209,6 +2209,8 @@ const CreateTask = ({ onSubmit, onCancel }) => {
           {/* Due Date with openToDate explicitly set */}
           <Form.Group controlId="dueDate" className="mt-3">
             <Form.Label>Due Date</Form.Label>
+            console.log('DueDate:', dueDate, 'valid?', dueDate instanceof Date
+            && !isNaN(dueDate.getTime()));
             <DatePicker
               selected={
                 dueDate && dueDate instanceof Date && !isNaN(dueDate.getTime())
