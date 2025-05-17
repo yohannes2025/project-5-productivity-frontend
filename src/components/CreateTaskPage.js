@@ -66,13 +66,14 @@ const CreateTaskPage = () => {
       <h2>Create Task</h2>
       {submitted && <p>Task created successfully!</p>}{" "}
       {/* Display success message */}
-      <CreateTask
+      <CreateTask onSubmit={handleCreateTask} />
+      {/* <CreateTask
         taskData={taskData}
         handleChange={handleChange}
         handleDateChange={handleDateChange}
         handleCreateTask={handleCreateTask}
         errors={errors}
-      />
+      /> */}
     </div>
   );
 };

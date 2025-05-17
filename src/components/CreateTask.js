@@ -10,7 +10,7 @@ import api from "../services/api";
 const CreateTask = ({ onSubmit, onCancel }) => {
   const [title, setTitle] = useState("");
   const [description, setDescription] = useState("");
-  const [dueDate, setDueDate] = useState(() => new Date());
+  const [dueDate, setDueDate] = useState(new Date());
   const [priority, setPriority] = useState("medium");
   const [category, setCategory] = useState("development");
   const [status, setStatus] = useState("pending");
@@ -21,8 +21,8 @@ const CreateTask = ({ onSubmit, onCancel }) => {
   const [errorMessage, setErrorMessage] = useState("");
   const [successMessage, setSuccessMessage] = useState("");
   const [isSubmitting, setIsSubmitting] = useState(false);
-  const [startDate, setStartDate] = useState(null);
-  const [initialOpenToDate, setInitialOpenToDate] = useState(null);
+  // const [startDate, setStartDate] = useState(null);
+  // const [initialOpenToDate, setInitialOpenToDate] = useState(null);
 
   // Fetch users on mount
   useEffect(() => {
