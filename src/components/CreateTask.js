@@ -173,7 +173,7 @@ const CreateTask = ({ onSubmit, onCancel }) => {
               selected={
                 dueDate instanceof Date && !isNaN(dueDate.getTime())
                   ? dueDate
-                  : null
+                  : new Date()
               }
               onChange={(date) => setDueDate(date)}
               className="form-control"

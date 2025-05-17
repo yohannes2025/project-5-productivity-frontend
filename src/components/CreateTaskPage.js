@@ -1,4 +1,4 @@
-// export default CreateTaskPage;
+// src/components/CreateTaskPage;
 
 import React, { useState } from "react";
 import CreateTask from "./CreateTask";
@@ -7,7 +7,7 @@ const CreateTaskPage = () => {
   const [taskData, setTaskData] = useState({
     title: "",
     description: "",
-    dueDate: null, // Crucial: initialize dueDate to null or undefined
+    dueDate: new Date(), // Crucial: initialize dueDate to null or undefined
   });
 
   const [errors, setErrors] = useState({}); // Store validation errors
