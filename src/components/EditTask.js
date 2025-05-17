@@ -1094,15 +1094,19 @@ const EditTask = ({ taskId, initialData, onSubmit, onCancel }) => {
             <Form.Label>Due Date</Form.Label>
             <DatePicker
               selected={
-                dueDate instanceof Date && !isNaN(dueDate.getTime())
+                dueDate && dueDate instanceof Date && !isNaN(dueDate.getTime())
                   ? dueDate
                   : new Date()
               }
               onChange={(date) => setDueDate(date)}
               className="form-control"
-              required
               dateFormat="yyyy-MM-dd"
               minDate={new Date()}
+              openToDate={
+                dueDate && dueDate instanceof Date && !isNaN(dueDate.getTime())
+                  ? dueDate
+                  : new Date()
+              }
             />
           </Form.Group>
 

@@ -2220,12 +2220,7 @@ const CreateTask = ({ onSubmit, onCancel }) => {
               required
               dateFormat="yyyy-MM-dd"
               minDate={new Date()}
-              openToDate={new Date()} // <-- Explicitly set here
-              openToDate={
-                dueDate && dueDate instanceof Date && !isNaN(dueDate.getTime())
-                  ? dueDate
-                  : new Date()
-              }
+              // openToDate={new Date()} // <-- Explicitly set here
               openToDate={
                 dueDate && dueDate instanceof Date && !isNaN(dueDate.getTime())
                   ? dueDate
