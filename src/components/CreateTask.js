@@ -2060,8 +2060,6 @@ const CreateTask = ({ onSubmit, onCancel }) => {
   const [errorMessage, setErrorMessage] = useState("");
   const [successMessage, setSuccessMessage] = useState("");
   const [isSubmitting, setIsSubmitting] = useState(false);
-  const [startDate, setStartDate] = useState(null);
-  const [initialOpenToDate, setInitialOpenToDate] = useState(null); // Not used here, but kept for potential future use
 
   // Fetch users on mount
   useEffect(() => {
@@ -2223,6 +2221,16 @@ const CreateTask = ({ onSubmit, onCancel }) => {
               dateFormat="yyyy-MM-dd"
               minDate={new Date()}
               openToDate={new Date()} // <-- Explicitly set here
+              openToDate={
+                dueDate && dueDate instanceof Date && !isNaN(dueDate.getTime())
+                  ? dueDate
+                  : new Date()
+              }
+              openToDate={
+                dueDate && dueDate instanceof Date && !isNaN(dueDate.getTime())
+                  ? dueDate
+                  : new Date()
+              }
             />
           </Form.Group>
 
