@@ -1,4 +1,4 @@
-// App.js
+// src/App.js
 import React, { useState } from "react";
 import NavBar from "./components/NavBar";
 import styles from "./App.module.css";
@@ -7,12 +7,13 @@ import "bootstrap/dist/css/bootstrap.min.css";
 import { Routes, Route, Navigate } from "react-router-dom";
 import Login from "./components/Login";
 import Register from "./components/Register";
-import CreateTask from "./components/CreateTask"; // CreateTaskPage uses it internally
 import EditTask from "./components/EditTask";
 import TaskList from "./components/TaskList";
 import HomePage from "./components/HomePage";
 import "react-datepicker/dist/react-datepicker.css";
 import CreateTaskPage from "./components/CreateTaskPage"; // a wrapper/page component
+import NotFound from "./components/NotFound";
+import ProtectedRoute from "./ProtectedRoute";
 
 function App() {
   const [isLoggedIn, setIsLoggedIn] = useState(false);
@@ -76,26 +77,39 @@ function App() {
           />
 
           {/* Use a URL parameter :id to capture the task ID */}
+          {/* Protected routes using ProtectedRoute */}
           <Route
-            path="/edittask/:id" // <-- ADDED :id parameter
+            path="/createtask"
             element={
-              isLoggedIn ? (
-                // EditTask component fetches data based on the ID from the URL
-                <EditTask
-                // onSubmit={handleTaskSubmit}
-                // onCancel={handleTaskCancel}
+              <ProtectedRoute>
+                <CreateTaskPage
+                  users={[]}
+                  onSubmit={handleTaskSubmit}
+                  onCancel={handleTaskCancel}
                 />
-              ) : (
-                <Navigate to="/login" />
-              )
+              </ProtectedRoute>
             }
           />
 
-          {/* Route for listing tasks */}
+          <Route
+            path="/edittask/:id"
+            element={
+              <ProtectedRoute>
+                <EditTask />
+              </ProtectedRoute>
+            }
+          />
+
           <Route
             path="/tasklist"
-            element={isLoggedIn ? <TaskList /> : <Navigate to="/login" />}
+            element={
+              <ProtectedRoute>
+                <TaskList />
+              </ProtectedRoute>
+            }
           />
+          {/* NotFound fallback route */}
+          <Route path="*" element={<NotFound />} />
         </Routes>
       </Container>
     </div>

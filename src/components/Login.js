@@ -38,7 +38,7 @@ const Login = ({ onLogin }) => {
       localStorage.setItem("refresh_token", response.data.refresh);
 
       onLogin();
-      navigate("/create-task"); // Redirect to create task page after successful login
+      navigate("/"); // Redirect to home page after successful login
     } catch (err) {
       // console.error("Login error:", err);
       setError(err.response?.data?.message || "Invalid email or password.");
