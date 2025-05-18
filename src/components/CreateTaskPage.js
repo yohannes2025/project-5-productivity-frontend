@@ -35,7 +35,6 @@ const CreateTaskPage = () => {
       // Send POST request to create task
       const response = await axios.post(
         "https://project-5-productivity-backend.onrender.com/api/tasks/",
-        // "http://localhost:8000/api/tasks/",
         data,
         {
           headers: {
@@ -44,15 +43,13 @@ const CreateTaskPage = () => {
           },
         }
       );
-
-      console.log("Task created successfully:");
       return response.data;
     } catch (err) {
       if (err.response) {
-        console.error("Server validation errors:", err.response.data);
+        // console.error("Server validation errors:", err.response.data);
         alert("Task creation failed: " + JSON.stringify(err.response.data));
       } else {
-        console.error("Network or unknown error:", err.message);
+        // console.error("Network or unknown error:", err.message);
         alert("Network error: " + err.message);
       }
       throw err;
