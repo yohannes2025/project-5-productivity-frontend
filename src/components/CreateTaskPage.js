@@ -35,7 +35,7 @@ const CreateTaskPage = () => {
       // Send POST request to create task
       const response = await axios.post(
         "https://project-5-productivity-backend.onrender.com/api/tasks/",
-        "http://localhost:8000/api/tasks/",
+        // "http://localhost:8000/api/tasks/",
         data,
         {
           headers: {
