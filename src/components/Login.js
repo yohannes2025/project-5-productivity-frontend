@@ -1,4 +1,4 @@
-// src/components/Login.js
+// Fsr Path: src/components/Login.js
 import React, { useState } from "react";
 import api from "../services/api";
 import { useNavigate, Link } from "react-router-dom";
@@ -15,11 +15,6 @@ import styles from "../styles/Common.module.css";
 import clsx from "clsx";
 
 const Login = ({ onLogin }) => {
-  console.log(
-    "Calling /api/user/ with header:",
-    api.defaults.headers.common["Authorization"]
-  );
-  // Accepting onLogin as a prop
   const navigate = useNavigate();
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
@@ -36,28 +31,19 @@ const Login = ({ onLogin }) => {
 
       const { access, refresh } = response.data;
 
-      // ✅ Save tokens
       localStorage.setItem("access_token", access);
       localStorage.setItem("refresh_token", refresh);
 
-      // ✅ Immediately update Axios headers
-      api.defaults.headers.common["Authorization"] = `Bearer ${access}`;
-
-      console.log("Received tokens:", response.data);
-      console.log("Stored access token:", localStorage.getItem("access_token"));
-      console.log(
-        "Axios header:",
-        api.defaults.headers.common["Authorization"]
-      );
-
-      // ✅ Call onLogin AFTER header is set
+      // Axios interceptor will now handle headers
       await onLogin();
-
-      // ✅ Redirect
       navigate("/");
     } catch (err) {
-      setError(err.response?.data?.message || "Invalid email or password.");
       console.error("Login error:", err.response || err);
+      setError(
+        err.response?.data?.message ||
+          err.response?.data?.detail ||
+          "Invalid email or password."
+      );
     }
   };
 
@@ -72,7 +58,7 @@ const Login = ({ onLogin }) => {
       )}
     >
       <Row className="w-100">
-        <Col xs={12} sm={10} md={8} lg={5} className="mx-auto ">
+        <Col xs={12} sm={10} md={8} lg={5} className="mx-auto">
           <Card className="shadow">
             <Card.Body>
               <Card.Title className="text-center">Login</Card.Title>
@@ -87,7 +73,7 @@ const Login = ({ onLogin }) => {
                     required
                   />
                 </Form.Group>
-                <Form.Group controlId="formPassword">
+                <Form.Group controlId="formPassword" className="mt-2">
                   <Form.Label>Password</Form.Label>
                   <Form.Control
                     type="password"

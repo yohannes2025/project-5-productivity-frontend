@@ -1,4 +1,5 @@
-// src/components/App.js
+// src/App.js
+
 import React, { useState } from "react";
 import NavBar from "./components/NavBar";
 import styles from "./App.module.css";
@@ -11,9 +12,9 @@ import EditTask from "./components/EditTask";
 import TaskList from "./components/TaskList";
 import HomePage from "./components/HomePage";
 import "react-datepicker/dist/react-datepicker.css";
-import CreateTaskPage from "./components/CreateTaskPage"; // a wrapper/page component
+import CreateTaskPage from "./components/CreateTaskPage";
 import NotFound from "./components/NotFound";
-import ProtectedRoute from "./ProtectedRoute";
+import ProtectedRoute from "./ProtectedRoute"; // ✅ must be inside ./components/
 
 function App() {
   const [isLoggedIn, setIsLoggedIn] = useState(false);
@@ -24,16 +25,6 @@ function App() {
 
   const handleLogout = () => {
     setIsLoggedIn(false);
-    // Redirect to home page
-  };
-
-  // (EditTask handles submission internally)
-  const handleTaskSubmit = (taskData) => {
-    // CreateTaskPage, EditTask uses its own submit
-  };
-
-  const handleTaskCancel = () => {
-    // CreateTaskPage
   };
 
   return (
@@ -41,12 +32,10 @@ function App() {
       <NavBar isLoggedIn={isLoggedIn} onLogout={handleLogout} />
       <Container className={styles.container}>
         <Routes>
-          {/* Redirect root to /createtask if logged in, else show HomePage or login page */}
           <Route
             path="/"
             element={isLoggedIn ? <Navigate to="/createtask" /> : <HomePage />}
           />
-
           <Route
             path="/login"
             element={
@@ -57,24 +46,19 @@ function App() {
               )
             }
           />
-
           <Route path="/register" element={<Register />} />
-
-          {/* Route for creating tasks (protectected routes) */}
           <Route
             path="/createtask"
             element={
               <ProtectedRoute isLoggedIn={isLoggedIn}>
-                <CreateTaskPage // handles the onSubmit/onCancel props
-                  users={[]} // Pass necessary props when CreateTaskPage needs them
-                  onSubmit={handleTaskSubmit}
-                  onCancel={handleTaskCancel}
+                <CreateTaskPage
+                  users={[]}
+                  onSubmit={() => {}}
+                  onCancel={() => {}}
                 />
               </ProtectedRoute>
             }
           />
-
-          {/* Use a URL parameter :id to capture the task ID */}
           <Route
             path="/edittask/:id"
             element={
@@ -83,8 +67,6 @@ function App() {
               </ProtectedRoute>
             }
           />
-
-          {/* Route for listing tasks */}
           <Route
             path="/tasklist"
             element={
@@ -93,7 +75,6 @@ function App() {
               </ProtectedRoute>
             }
           />
-          {/* NotFound fallback route */}
           <Route path="*" element={<NotFound />} />
         </Routes>
       </Container>
