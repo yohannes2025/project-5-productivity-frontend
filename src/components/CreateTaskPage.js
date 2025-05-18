@@ -1,80 +1,80 @@
-// src/components/CreateTaskPage;
-
+// CreateTaskPage.js
 import React, { useState } from "react";
-import CreateTask from "./CreateTask";
+import axios from "axios";
+import CreateTask from "./CreateTask"; // Import the CreateTask component
 
 const CreateTaskPage = () => {
-  const [taskData, setTaskData] = useState({
-    title: "",
-    description: "",
-    dueDate: new Date(), // Crucial: initialize dueDate to null or undefined
-  });
-
-  const [errors, setErrors] = useState({}); // Store validation errors
-  const [submitted, setSubmitted] = useState(false); // State to track submission
-
-  const handleChange = (e) => {
-    const { name, value } = e.target;
-    setTaskData({ ...taskData, [name]: value });
-    setErrors({}); // Clear errors when input changes
-  };
-
-  const handleDateChange = (date) => {
-    setTaskData({ ...taskData, dueDate: date });
-  };
+  // State variable for debugging
+  const [debugData, setDebugData] = useState(null);
 
   const handleCreateTask = async (taskData) => {
     try {
-      // Important:  Validate before sending
-      if (!taskData.title) {
-        setErrors({ title: "Title is required" });
-        return; // Stop further execution if validation fails
-      }
+      const token = localStorage.getItem("access_token");
 
-      // CRITICAL: Convert dueDate to ISO string for backend
-      const payload = {
-        ...taskData,
-        dueDate: taskData.dueDate ? taskData.dueDate.toISOString() : null, //Handle null/undefined
+      // Format due_date as YYYY-MM-DD
+      const formattedDueDate = (() => {
+        if (!taskData.dueDate) return "";
+        const date = new Date(taskData.dueDate);
+        const year = date.getFullYear();
+        const month = String(date.getMonth() + 1).padStart(2, "0");
+        const day = String(date.getDate()).padStart(2, "0");
+        return `${year}-${month}-${day}`;
+      })();
+
+      // Prepare data payload
+      const data = {
+        title: taskData.title,
+        description: taskData.description,
+        due_date: formattedDueDate,
+        priority: taskData.priority,
+        category: taskData.category,
+        status: taskData.status.toLowerCase(),
+        assigned_users: taskData.assignedUsers,
       };
 
-      // Replace with your actual API call
-      const response = await fetch("/api/tasks", {
-        method: "POST",
-        headers: {
-          "Content-Type": "application/json",
-        },
-        body: JSON.stringify(payload),
-      });
+      // Send POST request to create task
+      const response = await axios.post(
+        "http://localhost:8000/api/tasks/",
+        data,
+        {
+          headers: {
+            Authorization: `Bearer ${token}`,
+            "Content-Type": "application/json",
+          },
+        }
+      );
 
-      if (!response.ok) {
-        const errorData = await response.json();
-        // Handle errors from the backend
-        setErrors(errorData.errors || { general: "Failed to create task" });
+      console.log("Task created successfully:");
+      return response.data;
+    } catch (err) {
+      if (err.response) {
+        console.error("Server validation errors:", err.response.data);
+        alert("Task creation failed: " + JSON.stringify(err.response.data));
       } else {
-        setSubmitted(true); // Set submitted to true for success
-        setTaskData({ title: "", description: "", dueDate: null });
-        setErrors({}); // Clear errors for a clean form
+        console.error("Network or unknown error:", err.message);
+        alert("Network error: " + err.message);
       }
-    } catch (error) {
-      console.error("Error creating task:", error);
-      setErrors({ general: "An error occurred" });
+      throw err;
     }
   };
 
   return (
-    <div>
-      <h2>Create Task</h2>
-      {submitted && <p>Task created successfully!</p>}{" "}
-      {/* Display success message */}
+    <>
+      {debugData && (
+        <div
+          style={{
+            backgroundColor: "#f0f0f0",
+            padding: "20px",
+            margin: "20px",
+            border: "1px solid #ccc",
+          }}
+        >
+          <h3 style={{ margin: "0 0 10px 0" }}>Debug Data:</h3>
+          <pre>{JSON.stringify(debugData, null, 2)}</pre>
+        </div>
+      )}
       <CreateTask onSubmit={handleCreateTask} />
-      {/* <CreateTask
-        taskData={taskData}
-        handleChange={handleChange}
-        handleDateChange={handleDateChange}
-        handleCreateTask={handleCreateTask}
-        errors={errors}
-      /> */}
-    </div>
+    </>
   );
 };
 

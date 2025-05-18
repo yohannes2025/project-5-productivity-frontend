@@ -1,4 +1,4 @@
-// src/components/CreateTask.js
+// CreateTask.js
 import React, { useEffect, useState } from "react";
 import DatePicker from "react-datepicker";
 import "react-datepicker/dist/react-datepicker.css";
@@ -21,8 +21,6 @@ const CreateTask = ({ onSubmit, onCancel }) => {
   const [errorMessage, setErrorMessage] = useState("");
   const [successMessage, setSuccessMessage] = useState("");
   const [isSubmitting, setIsSubmitting] = useState(false);
-  // const [startDate, setStartDate] = useState(null);
-  // const [initialOpenToDate, setInitialOpenToDate] = useState(null);
 
   // Fetch users on mount
   useEffect(() => {
@@ -38,6 +36,7 @@ const CreateTask = ({ onSubmit, onCancel }) => {
 
         setUsers(usersRes.data);
       } catch (error) {
+        // console.error(error);
         setErrorMessage("Failed to load users.");
       } finally {
         setLoading(false);
@@ -96,6 +95,7 @@ const CreateTask = ({ onSubmit, onCancel }) => {
         setSuccessMessage("");
       }, 3000);
     } catch (error) {
+      // console.error("Task creation failed:", error);
       setErrorMessage(
         error?.response?.data?.detail ||
           error?.message ||
@@ -170,17 +170,10 @@ const CreateTask = ({ onSubmit, onCancel }) => {
           <Form.Group controlId="dueDate" className="mt-3">
             <Form.Label>Due Date</Form.Label>
             <DatePicker
-              selected={
-                dueDate instanceof Date && !isNaN(dueDate.getTime())
-                  ? dueDate
-                  : new Date()
-              }
+              selected={dueDate}
               onChange={(date) => setDueDate(date)}
               className="form-control"
               required
-              dateFormat="yyyy-MM-dd"
-              minDate={new Date()}
-              placeholderText="Select a due date"
             />
           </Form.Group>
 
@@ -226,6 +219,7 @@ const CreateTask = ({ onSubmit, onCancel }) => {
             <Form.Label>Assigned Users</Form.Label>
             <Form.Select
               multiple
+              required
               value={assignedUsers}
               onChange={handleAssignedUserChange}
             >

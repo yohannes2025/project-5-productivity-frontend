@@ -313,7 +313,7 @@ const TaskList = () => {
                 <th>Title</th>
                 <th>Due Date</th>
                 <th>Priority</th>
-                <th>Category</th> {/* Added Category column */}
+                <th>Category</th>
                 <th>Status</th>
                 <th>Assigned Users</th>
                 <th>Actions</th>
