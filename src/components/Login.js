@@ -25,19 +25,15 @@ const Login = ({ onLogin }) => {
     e.preventDefault();
 
     try {
-      const response = await api.post(
-        "/api/login/",
-        {
-          email,
-          password,
-        },
-        { timeout: 5000 }
-      );
+      const response = await api.post("/api/login/", {
+        email,
+        password,
+      });
 
       localStorage.setItem("access_token", response.data.access);
       localStorage.setItem("refresh_token", response.data.refresh);
 
-      onLogin();
+      await onLogin();
       navigate("/"); // Redirect to home page after successful login
     } catch (err) {
       // console.error("Login error:", err);
