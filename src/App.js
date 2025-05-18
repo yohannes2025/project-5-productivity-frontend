@@ -1,4 +1,4 @@
-// src/App.js
+// src/components/App.js
 import React, { useState } from "react";
 import NavBar from "./components/NavBar";
 import styles from "./App.module.css";
@@ -17,6 +17,7 @@ import ProtectedRoute from "./ProtectedRoute";
 
 function App() {
   const [isLoggedIn, setIsLoggedIn] = useState(false);
+
   const handleLogin = () => {
     setIsLoggedIn(true);
   };
@@ -59,31 +60,13 @@ function App() {
 
           <Route path="/register" element={<Register />} />
 
-          {/* Route for creating tasks */}
+          {/* Route for creating tasks (protectected routes) */}
           <Route
             path="/createtask"
             element={
-              isLoggedIn ? (
-                // handles the onSubmit/onCancel props
-                <CreateTaskPage
+              <ProtectedRoute isLoggedIn={isLoggedIn}>
+                <CreateTaskPage // handles the onSubmit/onCancel props
                   users={[]} // Pass necessary props when CreateTaskPage needs them
-                  onSubmit={handleTaskSubmit}
-                  onCancel={handleTaskCancel}
-                />
-              ) : (
-                <Navigate to="/login" />
-              )
-            }
-          />
-
-          {/* Use a URL parameter :id to capture the task ID */}
-          {/* Protected routes using ProtectedRoute */}
-          <Route
-            path="/createtask"
-            element={
-              <ProtectedRoute>
-                <CreateTaskPage
-                  users={[]}
                   onSubmit={handleTaskSubmit}
                   onCancel={handleTaskCancel}
                 />
@@ -91,19 +74,21 @@ function App() {
             }
           />
 
+          {/* Use a URL parameter :id to capture the task ID */}
           <Route
             path="/edittask/:id"
             element={
-              <ProtectedRoute>
+              <ProtectedRoute isLoggedIn={isLoggedIn}>
                 <EditTask />
               </ProtectedRoute>
             }
           />
 
+          {/* Route for listing tasks */}
           <Route
             path="/tasklist"
             element={
-              <ProtectedRoute>
+              <ProtectedRoute isLoggedIn={isLoggedIn}>
                 <TaskList />
               </ProtectedRoute>
             }

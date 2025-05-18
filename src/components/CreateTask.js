@@ -172,6 +172,7 @@ const CreateTask = ({ onSubmit, onCancel }) => {
               onChange={(date) => setDueDate(date)}
               className="form-control"
               required
+              minDate={new Date()}
             />
           </Form.Group>
 
