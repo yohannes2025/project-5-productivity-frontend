@@ -1,6 +1,5 @@
 // TaskList.js
-import React, { useState, useEffect, useMemo, useCallback } from "react";
-import axios from "axios";
+import React, { useState, useEffect, useMemo } from "react";
 import {
   Container,
   Row,
@@ -317,7 +316,6 @@ const TaskList = () => {
                 <th>Category</th>
                 <th>Status</th>
                 <th>Assigned Users</th>
-                <th>Files</th>
                 <th>Actions</th>
               </tr>
             </thead>
@@ -344,25 +342,6 @@ const TaskList = () => {
                             .map((userId) => getUserNameById(userId))
                             .join(", ")
                         : "Unassigned"}
-                    </td>
-                    <td>
-                      {task.upload_files && task.upload_files.length > 0 ? (
-                        <ul className="list-unstyled mb-0">
-                          {task.upload_files.map((file) => (
-                            <li key={file.id}>
-                              <a
-                                href={file.file}
-                                target="_blank"
-                                rel="noopener noreferrer"
-                              >
-                                {file.file.split("/").pop()}
-                              </a>
-                            </li>
-                          ))}
-                        </ul>
-                      ) : (
-                        "No Files"
-                      )}
                     </td>
                     <td>
                       {/* Edit Button (Table Row) */}
