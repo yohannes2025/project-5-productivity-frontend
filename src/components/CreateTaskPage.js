@@ -48,8 +48,6 @@ const CreateTaskPage = () => {
 
   return (
     <Container className="mt-5">
-      <h2 className="mb-4">New Task</h2>
-
       {errorMessage && (
         <Alert variant="danger" className="mb-3">
           {errorMessage}
