@@ -1,4 +1,5 @@
-// CreateTask.js
+// export default CreateTask;
+
 import React, { useEffect, useState } from "react";
 import DatePicker from "react-datepicker";
 import "react-datepicker/dist/react-datepicker.css";
@@ -8,6 +9,10 @@ import clsx from "clsx";
 import api from "../services/api";
 
 const CreateTask = ({ onSubmit, onCancel }) => {
+  if (typeof onSubmit !== "function") {
+    throw new Error("onSubmit prop must be a function");
+  }
+
   const [title, setTitle] = useState("");
   const [description, setDescription] = useState("");
   const [dueDate, setDueDate] = useState(new Date());
@@ -22,18 +27,13 @@ const CreateTask = ({ onSubmit, onCancel }) => {
   const [successMessage, setSuccessMessage] = useState("");
   const [isSubmitting, setIsSubmitting] = useState(false);
 
-  // Fetch users on mount
   useEffect(() => {
     const fetchUsers = async () => {
       try {
         const token = localStorage.getItem("access_token");
-
         const usersRes = await api.get("/api/users/", {
-          headers: {
-            Authorization: `Bearer ${token}`,
-          },
+          headers: { Authorization: `Bearer ${token}` },
         });
-
         setUsers(usersRes.data);
       } catch (error) {
         setErrorMessage("Failed to load users.");
@@ -41,7 +41,6 @@ const CreateTask = ({ onSubmit, onCancel }) => {
         setLoading(false);
       }
     };
-
     fetchUsers();
   }, []);
 
@@ -75,19 +74,36 @@ const CreateTask = ({ onSubmit, onCancel }) => {
     setSuccessMessage("");
     setIsSubmitting(true);
 
-    const taskData = {
-      title,
-      description,
-      dueDate,
-      priority,
-      category,
-      status,
-      assignedUsers,
-      files,
-    };
-
     try {
-      await onSubmit(taskData);
+      // Normalize values to lowercase strings (optional)
+      const normalizedPriority =
+        typeof priority === "string" ? priority.toLowerCase() : "medium";
+      const normalizedCategory =
+        typeof category === "string" ? category.toLowerCase() : "development";
+      const normalizedStatus =
+        typeof status === "string" ? status.toLowerCase() : "pending";
+
+      const formData = new FormData();
+      formData.append("title", title);
+      formData.append("description", description);
+
+      const dateObj = new Date(dueDate);
+      const formattedDate = `${dateObj.getFullYear()}-${(dateObj.getMonth() + 1)
+        .toString()
+        .padStart(2, "0")}-${dateObj.getDate().toString().padStart(2, "0")}`;
+      formData.append("due_date", formattedDate);
+
+      formData.append("priority", normalizedPriority);
+      formData.append("category", normalizedCategory);
+      formData.append("status", normalizedStatus);
+
+      assignedUsers.forEach((userId) =>
+        formData.append("assigned_users", userId)
+      );
+      files.forEach((file) => formData.append("files", file));
+
+      await onSubmit(formData);
+
       setSuccessMessage("Task created successfully!");
       setTimeout(() => {
         resetForm();

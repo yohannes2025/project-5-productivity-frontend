@@ -1,78 +1,73 @@
-// CreateTaskPage.js
+// src/components/CreateTaskPage.js
 import React, { useState } from "react";
-import axios from "axios";
-import CreateTask from "./CreateTask"; // Import the CreateTask component
+import { useNavigate } from "react-router-dom";
+import CreateTask from "../components/CreateTask";
+import api from "../services/api";
+import { Container, Alert, Spinner } from "react-bootstrap";
 
 const CreateTaskPage = () => {
-  // State variable for debugging
-  const [debugData, setDebugData] = useState(null);
+  const [errorMessage, setErrorMessage] = useState("");
+  const [loading, setLoading] = useState(false);
+  const navigate = useNavigate();
 
-  const handleCreateTask = async (taskData) => {
+  // This function handles the actual API submission from CreateTask
+  const handleCreateTask = async (formData) => {
+    setErrorMessage("");
+    setLoading(true);
+
     try {
+      // Note: formData is a FormData instance including files
       const token = localStorage.getItem("access_token");
 
-      // Format due_date as YYYY-MM-DD
-      const formattedDueDate = (() => {
-        if (!taskData.dueDate) return "";
-        const date = new Date(taskData.dueDate);
-        const year = date.getFullYear();
-        const month = String(date.getMonth() + 1).padStart(2, "0");
-        const day = String(date.getDate()).padStart(2, "0");
-        return `${year}-${month}-${day}`;
-      })();
+      const response = await api.post("/api/tasks/", formData, {
+        headers: {
+          "Content-Type": "multipart/form-data",
+          Authorization: `Bearer ${token}`,
+        },
+      });
 
-      // Prepare data payload
-      const data = {
-        title: taskData.title,
-        description: taskData.description,
-        due_date: formattedDueDate,
-        priority: taskData.priority,
-        category: taskData.category,
-        status: taskData.status.toLowerCase(),
-        assigned_users: taskData.assignedUsers,
-      };
+      // Navigate to the task list or detail page after success
+      navigate("/tasklist");
 
-      // Send POST request to create task
-      const response = await axios.post(
-        "https://project-5-productivity-backend.onrender.com/api/tasks/",
-        data,
-        {
-          headers: {
-            Authorization: `Bearer ${token}`,
-            "Content-Type": "application/json",
-          },
-        }
-      );
       return response.data;
-    } catch (err) {
-      if (err.response) {
-        // console.error("Server validation errors:", err.response.data);
-        alert("Task creation failed: " + JSON.stringify(err.response.data));
+    } catch (error) {
+      // Provide error details for CreateTask component to display
+      if (error.response && error.response.data) {
+        const detail =
+          error.response.data.detail || JSON.stringify(error.response.data);
+        setErrorMessage(detail);
+        throw new Error(detail);
       } else {
-        // console.error("Network or unknown error:", err.message);
-        alert("Network error: " + err.message);
+        setErrorMessage(error.message || "Failed to create task.");
+        throw error;
       }
-      throw err;
+    } finally {
+      setLoading(false);
     }
   };
 
   return (
-    <>
-      {debugData && (
-        <div
-          style={{
-            backgroundColor: "#f0f0f0",
-            padding: "20px",
-            margin: "20px",
-            border: "1px solid #ccc",
-          }}
-        >
-          <h3 style={{ margin: "0 0 10px 0" }}>Debug Data:</h3>
-          <pre>{JSON.stringify(debugData, null, 2)}</pre>
-        </div>
+    <Container className="mt-5">
+      <h2 className="mb-4">New Task</h2>
+
+      {errorMessage && (
+        <Alert variant="danger" className="mb-3">
+          {errorMessage}
+        </Alert>
       )}
-      <CreateTask onSubmit={handleCreateTask} />
-    </>
+
+      {loading ? (
+        <div className="text-center">
+          <Spinner animation="border" />
+          <p>Creating task...</p>
+        </div>
+      ) : (
+        <CreateTask
+          onSubmit={handleCreateTask}
+          onCancel={() => navigate("/tasks")}
+        />
+      )}
+    </Container>
   );
 };
 

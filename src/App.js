@@ -14,13 +14,12 @@ import HomePage from "./components/HomePage";
 import "react-datepicker/dist/react-datepicker.css";
 import CreateTaskPage from "./components/CreateTaskPage";
 import NotFound from "./components/NotFound";
-import ProtectedRoute from "./ProtectedRoute"; // ✅ must be inside ./components/
+import ProtectedRoute from "./ProtectedRoute";
 import api from "./services/api";
 
 function App() {
   const [isLoggedIn, setIsLoggedIn] = useState(false);
 
-  // 🔁 Validate token on app load
   useEffect(() => {
     const verifyToken = async () => {
       const token = localStorage.getItem("access_token");
@@ -31,7 +30,7 @@ function App() {
 
       try {
         await api.post("/api/token/verify/", { token });
-        setIsLoggedIn(true); // ✅ token is valid
+        setIsLoggedIn(true);
         api.defaults.headers.common["Authorization"] = `Bearer ${token}`;
       } catch (err) {
         console.error("Invalid token, logging out");
