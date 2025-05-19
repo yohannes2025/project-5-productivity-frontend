@@ -33,10 +33,10 @@ const Login = ({ onLogin }) => {
 
       localStorage.setItem("access_token", access);
       localStorage.setItem("refresh_token", refresh);
+      api.defaults.headers.common["Authorization"] = `Bearer ${access}`;
 
-      // Axios interceptor will now handle headers
-      await onLogin();
-      navigate("/");
+      await onLogin(); // updates state
+      navigate("/"); // redirect only after state is updated
     } catch (err) {
       console.error("Login error:", err.response || err);
       setError(
