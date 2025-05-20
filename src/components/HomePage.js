@@ -13,7 +13,7 @@ const HomePage = () => {
         "d-flex",
         "flex-column",
         "justify-content-center",
-        "align-items-center"
+        "align-items-center",
       )}
     >
       <Row className="justify-content-center mb-5">

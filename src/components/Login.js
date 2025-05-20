@@ -42,7 +42,7 @@ const Login = ({ onLogin }) => {
       setError(
         err.response?.data?.message ||
           err.response?.data?.detail ||
-          "Invalid email or password."
+          "Invalid email or password.",
       );
     }
   };
@@ -54,7 +54,7 @@ const Login = ({ onLogin }) => {
         "d-flex",
         "flex-column",
         "justify-content-center",
-        "align-items-center"
+        "align-items-center",
       )}
     >
       <Row className="w-100">
