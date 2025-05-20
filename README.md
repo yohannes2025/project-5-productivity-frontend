@@ -1,4 +1,4 @@
-# 📅 Productivity App Project
+# 📅 Productivity App Project Frontend
 
 ![productivity_app](./src/assets/images/productivity_app.png)
 
