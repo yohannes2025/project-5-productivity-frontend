@@ -13,11 +13,11 @@
     "jwt-decode": "^3.1.2",
     "react": "^18.3.1",
     "react-bootstrap": "^2.10.9",
-    "react-datepicker": "^8.3.0",
+    "react-datepicker": "^4.8.0",
     "react-dom": "^18.3.1",
     "react-infinite-scroll-component": "^6.1.0",
     "react-router-dom": "^6.30.0",
-    "react-scripts": "^3.0.1",
+    "react-scripts": "^5.0.1",
     "styled-components": "^6.1.17",
     "web-vitals": "^1.1.2"
   },
@@ -27,12 +27,6 @@
     "build": "react-scripts build",
     "test": "react-scripts test",
     "eject": "react-scripts eject"
-  },
-  "eslintConfig": {
-    "extends": [
-      "react-app",
-      "react-app/jest"
-    ]
   },
   "browserslist": {
     "production": [
@@ -49,7 +43,6 @@
   "devDependencies": {
     "@babel/plugin-proposal-optional-chaining": "^7.21.0",
     "@eslint/js": "^9.27.0",
-    "eslint": "^8.57.1",
     "eslint-plugin-react": "^7.37.5",
     "globals": "^16.1.0",
     "msw": "^2.7.5",
