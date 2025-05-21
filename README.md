@@ -715,45 +715,127 @@ The `TaskList` component is designed for task management, allowing users to easi
 
 ## Deployment
 
-### Heroku
+\# 🚀 Deploying a React App to Render.com
 
-The Productivity API is deployed to Heroku, using PostgreSql database.
-To duplicate deployment to Heroku, follow these steps:
+This guide will walk you through the complete process of deploying a React app to \[Render.com\](https://render.com), using its free Static Site Hosting.
 
-- Description of the deployment process using Heroku.
-- Fork or clone this repository in GitHub.
-- You will need a Cloudinary account to host user profile images.
-- Login to Cloudinary.
-- Select the 'dashboard' option.
-- Copy the value of the 'API Environment variable' from the part starting `cloudinary://` to the end. You may need to select the eye icon to view the full environment variable. Paste this value somewhere for safe keeping as you will need it shortly (but destroy after deployment).
-- Log in to Heroku.
-- Select 'Create new app' from the 'New' menu at the top right.
-- Enter a name for the app and select the appropriate region.
-- Select 'Create app'.
-- Select 'Settings' from the menu at the top.
-- Login to ElephantSQL.
-- Click 'Create new instance' on the dashboard.
-- Name the 'plan' and select the 'Tiny Turtle (free)' plan.
-- Select 'select region'.
-- Choose the nearest data centre to your location.
-- Click 'Review'.
-- Go to the ElephantSQL dashboard and click on the 'database instance name' for this project.
-- Copy the ElephantSQL database URL to your clipboard (this starts with `postgres://`).
-- Return to the Heroku dashboard.
-- Select the 'settings' tab.
-- Locate the 'reveal config vars' link and select.
-- Enter the following config var names and values:
-    - `CLOUDINARY_URL`: *your cloudinary URL as obtained above*
-    - `DATABASE_URL`: *your ElephantSQL postgres database URL as obtained above*
-    - `SECRET_KEY`: *your secret key*
-    - `ALLOWED_HOST`: *the url of your Heroku app (but without the `https://` prefix)*
-- Select the 'Deploy' tab at the top.
-- Select 'GitHub' from the deployment options and confirm you wish to deploy using GitHub. You may be asked to enter your GitHub password.
-- Find the 'Connect to GitHub' section and use the search box to locate your repo.
-- Select 'Connect' when found.
-- Optionally choose the main branch under 'Automatic Deploys' and select 'Enable Automatic Deploys' if you wish your deployed API to be automatically redeployed every time you push changes to GitHub.
-- Find the 'Manual Deploy' section, choose 'main' as the branch to deploy and select 'Deploy Branch'.
-- Your API will shortly be deployed and you will be given a link to the deployed site when the process is complete.
+\---
+
+\## ✅ Prerequisites
+
+Before you begin, make sure you have:
+
+\- A React app created using \`create-react-app\` or another setup
+
+\- A GitHub, GitLab, or Bitbucket repository containing your React code
+
+\- A \[Render.com\](https://render.com) account (free signup)
+
+\---
+
+\## 🛠 Step 1: Build Your React App
+
+In your React project directory, build the app for production:
+
+\`\`\`bash
+
+npm run build
+
+This creates a build/ folder with all your optimized static files.
+
+📁 Step 2: Push Your App to a Git Repository
+--------------------------------------------
+
+If your app isn't already pushed to GitHub:
+
+git init
+
+git add .
+
+git commit -m "Initial commit"
+
+git branch -M main
+
+git remote add origin https://github.com/YOUR\_USERNAME/YOUR\_REPO\_NAME.git
+
+git push -u origin main
+
+Make sure your code is visible on GitHub.
+
+🌐 Step 3: Create a Static Site on Render
+-----------------------------------------
+
+1.  Go to [https://render.com](https://render.com)
+    
+2.  Log in or create an account
+    
+3.  Click the **"New"** button and select **"Static Site"**
+    
+4.  Connect your GitHub/GitLab/Bitbucket account if prompted
+    
+5.  Select your React project repository
+    
+
+⚙️ Step 4: Configure the Static Site Settings
+---------------------------------------------
+
+Fill in the site configuration:
+
+*   **Name**: Choose a name for your site
+    
+*   **Branch**: main (or whatever branch you're deploying)
+    
+*   **Build Command**
+    
+
+npm run build
+
+*   :**Publish Directory**:build
+    
+
+You can also optionally set environment variables under the **"Advanced"** settings.
+
+🚀 Step 5: Deploy Your App
+--------------------------
+
+Click **"Create Static Site"**.
+
+Render will:
+
+*   Clone your repo
+    
+*   Install dependencies
+    
+*   Run npm run build
+    
+*   Deploy the contents of the build/ folder
+    
+
+After the build, your app will be live at a Render-generated domain like:
+
+https://your-site-name.onrender.com
+
+🔁 Step 6: Enable Automatic Deployments
+
+Render automatically redeploys your app on every push to the selected Git branch.
+
+No need to manually rebuild and redeploy!
+
+⚠️ Optional: Support Client-Side Routing (React Router)
+-------------------------------------------------------
+
+If you're using React Router and want to avoid 404 errors on page refresh:
+
+1.  Create a file named \_redirects inside the public/ folder:
+    
+
+/\* /index.html 200
+
+2\. Commit and push: git add public/\_redirects
+
+git commit -m "Add \_redirects for React Router"
+
+git push
 
 ## Testing
 
