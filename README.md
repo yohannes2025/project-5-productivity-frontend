@@ -46,9 +46,7 @@ This application is built to ensure a **seamless user experience** in maintainin
 
 - [Testing](#testing)
 
-  - [Solved Bugs](#solved-bugs)
-  - [Unfixed Bugs](#unfixed-bugs)
-
+  
 - [Credits](#credits)
   - [Tutorials & Code Used](#tutorials--code-used)
   - [Acknowledgments](#acknowledgments)
