@@ -41,7 +41,7 @@ This application is built to ensure a **seamless user experience** in maintainin
 
 - [Deployment](#deployment)
 
-  - [Heroku](#heroku)
+  - [render](#render)
   - [GitHub](#github)
 
 - [Testing](#testing)
