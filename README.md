@@ -892,6 +892,7 @@ The following views/features were initially planned but **have been postponed** 
 - 🚫 **User Profile View**
 - 🚫 **Settings Page**
 - 🚫 **Calendar-Based Task View**
+- 🚫 **File Attachment**
 
 These features required more time for integration and design, and I decided not to compromise the quality of the existing features just to add more scope.
 
